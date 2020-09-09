@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+
+        <item
+            android:id="@+id/nav_add_routine"
+            android:icon="@drawable/ic_add_routine"
+            android:title="Add Routine" />
+        <item
+            android:id="@+id/nav_manage_routine"
+            android:icon="@drawable/ic_manage"
+            android:title="Manage Routine" />
+        <item
+            android:id="@+id/nav_import_routine"
+            android:icon="@drawable/ic_import"
+            android:title="Import Routine" />
+        <item
+            android:id="@+id/nav_my_routine_key"
+            android:icon="@drawable/ic_key"
+            android:title="My Routine Key" />
+        <item
+            android:id="@+id/nav_report_bug"
+            android:icon="@drawable/ic_bug"
+            android:title="Report a bug" />
+        <item
+            android:id="@+id/nav_check_update"
+            android:icon="@drawable/ic_update"
+            android:title="Check Update" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="About" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_signout"
+            android:title="Sign Out" />
+
+
+</menu>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "965650563062",
+    "firebase_url": "https://scheduler-70296.firebaseio.com",
+    "project_id": "scheduler-70296",
+    "storage_bucket": "scheduler-70296.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965650563062:android:13771c220b424bfec191d7",
+        "android_client_info": {
+          "package_name": "com.sarker.scheduler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965650563062-1sjlm5jl5v548jfrhkiuo7tu1nagtd6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjf5dTS0fzyr8kU4NkbyCyl1shL9TYy9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965650563062-1sjlm5jl5v548jfrhkiuo7tu1nagtd6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
