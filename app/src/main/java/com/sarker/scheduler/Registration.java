@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -32,12 +35,11 @@ import androidx.cardview.widget.CardView;
 public class Registration extends AppCompatActivity {
 
     private TextView logIn;
-    private EditText userName, userEmail, userPass;
-    private CardView btnSignup;
+    private TextInputEditText userName, userEmail, userPass;
+    private TextInputLayout nameEditTextLayout, emailEditTextLayout, passEditTextLayout;
+    private Button btnSignup;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
-    private ImageView vPass;
-    private boolean isShowPassword = false;
     private String user_id;
     private DatabaseReference current_user_db,myRoutine;
 
@@ -51,8 +53,10 @@ public class Registration extends AppCompatActivity {
         userEmail = findViewById(R.id.et_remail);
         userName = findViewById(R.id.et_name);
         userPass = findViewById(R.id.et_rpass);
+        nameEditTextLayout = findViewById(R.id.editTextNameLayout);
+        emailEditTextLayout = findViewById(R.id.editTextSignUpEmailLayout);
+        passEditTextLayout = findViewById(R.id.editTextSignUpPassLayout);
 
-        vPass = findViewById(R.id.imgRegPass);
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,22 +71,6 @@ public class Registration extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
-        vPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isShowPassword) {
-                    userPass.setTransformationMethod(new PasswordTransformationMethod());
-                    vPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_blue));
-                    isShowPassword = false;
-                }else{
-                    userPass.setTransformationMethod(null);
-                    vPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_visibility_blue));
-                    isShowPassword = true;
-                }
-            }
-        });
-
-
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,19 +80,30 @@ public class Registration extends AppCompatActivity {
                 String password = userPass.getText().toString();
                 String fname = userName.getText().toString();
 
-                if (fname.isEmpty()) {
-                    userName.setError("invalid name");
-                    userName.requestFocus();
+                 if (email.isEmpty() && password.isEmpty()) {
 
-                } else if (email.isEmpty()) {
-                    userEmail.setError("invalid email");
-                    userEmail.requestFocus();
-                } else if (password.isEmpty()) {
-                    userPass.setError("invalid password");
-                    userPass.requestFocus();
-                } else if (email.isEmpty() && password.isEmpty()) {
+                     if (fname.isEmpty()) {
+                         nameEditTextLayout.setError("*Name required");
+                         userName.requestFocus();
 
-                    Toast.makeText(Registration.this, "Enter a valid Email & Password", Toast.LENGTH_SHORT).show();
+                     } else{
+                         nameEditTextLayout.setErrorEnabled(false);
+                     }
+
+                     if (email.isEmpty()) {
+                         emailEditTextLayout.setError("*Email required");
+                         userEmail.requestFocus();
+                     } else{
+                         emailEditTextLayout.setErrorEnabled(false);
+                     }
+
+                     if (password.isEmpty()) {
+                         passEditTextLayout.setError("*Password required");
+                         userPass.requestFocus();
+                     } else{
+                         passEditTextLayout.setErrorEnabled(false);
+                     }
+
                 }else if (!(isNetworkAvaliable(Registration.this))) {
                     Toast.makeText(Registration.this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }

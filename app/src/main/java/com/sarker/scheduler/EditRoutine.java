@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +31,10 @@ import androidx.cardview.widget.CardView;
 public class EditRoutine extends AppCompatActivity {
 
     private ImageView back;
-    private EditText courseName,courseCode,courseTeacher,roomNo;
+    private TextInputEditText courseName,courseCode,courseTeacher,roomNo;
+    private TextInputLayout courseNameLayout, courseCodeLayout ,courseTeacherLayout ,roomNoLayout;
     private TextView startTime,endTime,dayE;
-    private CardView start,end,upRoutine;
+    private Button start,end,upRoutine;
     private String day,current_user_id,sTime,eTime,format,h1,m1,alarm,classTime,cName,cTeacher,cCode,rNo,ranKey;
     private FirebaseAuth mAuth;
     private DatabaseReference myRoutine;
@@ -45,6 +49,11 @@ public class EditRoutine extends AppCompatActivity {
         courseCode = findViewById(R.id.et_course_codeE);
         courseTeacher = findViewById(R.id.et_course_teacherE);
         roomNo = findViewById(R.id.et_room_noE);
+
+        courseNameLayout = findViewById(R.id.editTextCourseNameE);
+        courseCodeLayout = findViewById(R.id.editTextCourseCodeE);
+        courseTeacherLayout = findViewById(R.id.editTextCourseTeacherNameE);
+        roomNoLayout = findViewById(R.id.editTextCourseRoomNoE);
 
         startTime = findViewById(R.id.start_timeE);
         endTime = findViewById(R.id.end_timeE);
@@ -77,8 +86,8 @@ public class EditRoutine extends AppCompatActivity {
                 sTime = classTime.substring(0,8);
                 eTime = classTime.substring(11,19);
 
-                startTime.setText(classTime.substring(0,8));
-                endTime.setText(classTime.substring(11,19));
+                start.setText(classTime.substring(0,8));
+                end.setText(classTime.substring(11,19));
                 dayE.setText(day);
                 courseName.setText(cName);
                 courseCode.setText(cCode);
@@ -136,7 +145,7 @@ public class EditRoutine extends AppCompatActivity {
                             m1 = ""+selectedMinute;
                         }
 
-                        startTime.setText( h1 + ":" + m1+" "+format);
+                        start.setText( h1 + ":" + m1+" "+format);
                         sTime = ""+h1 + ":" + ""+m1+" "+format ;
                     }
 
@@ -180,7 +189,7 @@ public class EditRoutine extends AppCompatActivity {
                             m1 = ""+selectedMinute;
                         }
 
-                        endTime.setText( h1 + ":" + m1+" "+format);
+                        end.setText( h1 + ":" + m1+" "+format);
                         eTime = ""+h1 + ":" + ""+m1+" "+format ;
 
                     }
@@ -201,27 +210,61 @@ public class EditRoutine extends AppCompatActivity {
                 String teacher = courseTeacher.getText().toString();
                 String room = roomNo.getText().toString();
 
+                if (name.isEmpty() || code.isEmpty() || teacher.isEmpty() || room.isEmpty()){
+
+                    if (name.isEmpty()) {
+                        courseNameLayout.setError("empty field");
+                        courseName.requestFocus();
+                    }else {
+                        courseNameLayout.setErrorEnabled(false);
+                    }
+
+                    if (code.isEmpty()) {
+                        courseCodeLayout.setError("empty field");
+                        courseCode.requestFocus();
+                    }else {
+                        courseCodeLayout.setErrorEnabled(false);
+                    }
+
+                    if (teacher.isEmpty()) {
+                        courseTeacherLayout.setError("empty field");
+                        courseTeacher.requestFocus();
+                    }
+                    else {
+                        courseTeacherLayout.setErrorEnabled(false);
+                    }
+
+                    if (room.isEmpty()) {
+                        roomNoLayout.setError("empty field");
+                        roomNo.requestFocus();
+                    }
+                    else {
+                        roomNoLayout.setErrorEnabled(false);
+                    }
+
+                }
+                else {
+
+                    Map add = new HashMap();
+
+                    add.put("alarm", alarm);
+                    add.put("classTime", sTime+" - "+eTime);
+                    add.put("courseCode", code);
+                    add.put("courseTeacher", teacher);
+                    add.put("courseName", name);
+                    add.put("day", day);
+                    add.put("roomNo", room);
+                    add.put("randomKey", ranKey);
 
 
-                Map add = new HashMap();
+                    myRoutine.updateChildren(add);
 
-                add.put("alarm", alarm);
-                add.put("classTime", sTime+" - "+eTime);
-                add.put("courseCode", code);
-                add.put("courseTeacher", teacher);
-                add.put("courseName", name);
-                add.put("day", day);
-                add.put("roomNo", room);
-                add.put("randomKey", ranKey);
+                    Toast.makeText(EditRoutine.this, "Routine Update Successfully", Toast.LENGTH_SHORT).show();
 
-
-                myRoutine.updateChildren(add);
-
-                Toast.makeText(EditRoutine.this, "Routine Update Successfully", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(EditRoutine.this, MainActivity.class);
-                intent.putExtra("day", day);
-                EditRoutine.this.startActivity(intent);
+                    Intent intent = new Intent(EditRoutine.this, MainActivity.class);
+                    intent.putExtra("day", day);
+                    EditRoutine.this.startActivity(intent);
+                }
 
             }
         });

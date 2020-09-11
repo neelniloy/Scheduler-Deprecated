@@ -14,16 +14,17 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditRoutine" />
+        <activity android:name=".EditRoutine" android:theme="@style/Theme.MyApp"/>
         <activity android:name=".ManageRoutine" />
         <activity android:name=".ImportRoutine" />
-        <activity android:name=".AddRoutine" />
+        <activity android:name=".AddRoutine" android:theme="@style/Theme.MyApp" />
         <activity android:name=".MyRoutineKey" />
-        <activity android:name=".Registration" />
+        <activity android:name=".Registration" android:theme="@style/Theme.MyApp"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login">
+        <activity android:name=".Login"
+            android:theme="@style/Theme.MyApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,309 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="25dp"
     tools:context=".AddRoutine">
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Add Routine"
-        android:fontFamily="serif"
-        android:textAlignment="center"
-        android:textColor="@color/colorBlack"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:text="Select Day :"
-    android:textAlignment="center"
-    android:textColor="@color/colorBlack"
-    android:textSize="15.5sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.14" />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.14" />
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:background="@drawable/back_edittext"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.431"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="25dp"
+        android:orientation="vertical"
+        >
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_course_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/et_course_name"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:background="@color/Transparent"
-            android:gravity="start|top"
-            android:hint="Enter Course Name"
-            android:inputType="textPersonName"
-            android:lines="1"
-            android:padding="15dp"
-            android:textColor="#121111"
-            android:textColorHint="#191919"
-            android:textSize="14sp"
-            android:textStyle="italic" />
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_back"
+                />
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Add Routine"
+                android:fontFamily="serif"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                />
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:background="@drawable/back_edittext"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.54"
-        tools:layout_editor_absoluteX="0dp">
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_course_code" />
-
-        <EditText
-            android:id="@+id/et_course_code"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:background="@color/Transparent"
-            android:gravity="start|top"
-            android:hint="Enter Course Code"
-            android:inputType="textPersonName"
-            android:lines="1"
-            android:padding="15dp"
-            android:textColor="#121111"
-            android:textColorHint="#191919"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:background="@drawable/back_edittext"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.65"
-        tools:layout_editor_absoluteX="0dp">
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_person_blue" />
-
-        <EditText
-            android:id="@+id/et_course_teacher"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:background="@color/Transparent"
-            android:gravity="start|top"
-            android:hint="Enter Course Teacher Name"
-            android:inputType="textPersonName"
-            android:lines="1"
-            android:padding="15dp"
-            android:textColor="#121111"
-            android:textColorHint="#191919"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:background="@drawable/back_edittext"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.76"
-        tools:layout_editor_absoluteX="0dp">
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_room_no" />
-
-        <EditText
-            android:id="@+id/et_room_no"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:background="@color/Transparent"
-            android:gravity="start|top"
-            android:hint="Enter Room No"
-            android:inputType="textPersonName"
-            android:lines="1"
-            android:padding="15dp"
-            android:textColor="#121111"
-            android:textColorHint="#191919"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Start Time :"
-        android:textAlignment="center"
-        android:textColor="@color/colorBlack"
-        android:textSize="15.5sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_start_time"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        app:cardCornerRadius="5dp"
-        android:backgroundTint="#2196F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23">
-
-        <TextView
-            android:id="@+id/start_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select"
-            android:textColor="@color/colorWhite"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:layout_gravity="center"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            >
 
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Select Day :"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="15.5sp"
+                />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="End Time :"
-        android:textAlignment="center"
-        android:textColor="@color/colorBlack"
-        android:textSize="15.5sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_end_time"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        app:cardCornerRadius="5dp"
-        android:backgroundTint="#2196F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32">
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/end_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select"
-            android:textColor="@color/colorWhite"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:layout_gravity="center"/>
+            android:layout_marginBottom="20dp"
+            >
 
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Start Time :"
+                android:textColor="@color/colorBlack"
+                android:textSize="15.5sp"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_add_routine"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_width="180dp"
-        android:layout_height="35dp"
-        app:cardCornerRadius="5dp"
-        android:backgroundTint="#2196F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.92">
+            <Button
+                android:id="@+id/cv_start_time"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Select"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:background="@drawable/custom_button_bg2"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="false"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            >
+
+            <TextView
+                android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="End Time :"
+                android:textColor="@color/colorBlack"
+                android:textSize="15.5sp"
+                android:layout_gravity="center"
+                />
+
+            <Button
+                android:id="@+id/cv_end_time"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Select"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:background="@drawable/custom_button_bg2"
+                android:layout_marginLeft="17dp"
+                android:textAllCaps="false"
+                />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextCourseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_course_name"
+            app:startIconTint="#2196F3"
+            android:hint="Course Name"
+            app:endIconMode="clear_text"
+            android:layout_marginBottom="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_course_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextCourseCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_course_code"
+            app:startIconTint="#2196F3"
+            android:hint="Course Code"
+            app:endIconMode="clear_text"
+            android:layout_marginBottom="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_course_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextCourseTeacherName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_course_name"
+            app:startIconTint="#2196F3"
+            android:hint="Course Teacher Name"
+            app:endIconMode="clear_text"
+            android:layout_marginBottom="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_course_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextCourseRoomNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_room_no"
+            app:startIconTint="#2196F3"
+            android:hint="Room No"
+            app:endIconMode="clear_text"
+            android:layout_marginBottom="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_room_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/cv_add_routine"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Add Routine"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
-            android:textAlignment="center"
-            android:layout_gravity="center"/>
+            android:background="@drawable/custom_button_bg2"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            />
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

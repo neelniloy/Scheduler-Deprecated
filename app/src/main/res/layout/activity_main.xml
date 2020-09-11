@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="S c h e d u l e r "
                 android:fontFamily="@font/metal_mania"
-                android:textStyle="italic|bold"
+                android:textStyle="bold"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textColor="#000000"

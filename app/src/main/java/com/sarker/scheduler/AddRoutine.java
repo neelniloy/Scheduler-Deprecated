@@ -7,12 +7,15 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,9 +32,10 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
 
     private String[] users = { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
     private ImageView back;
-    private EditText courseName,courseCode,courseTeacher,roomNo;
+    private TextInputEditText courseName,courseCode,courseTeacher,roomNo;
+    private TextInputLayout courseNameLayout, courseCodeLayout ,courseTeacherLayout ,roomNoLayout;
     private TextView startTime,endTime;
-    private CardView start,end,addRoutine;
+    private Button start,end,addRoutine;
     private String day,current_user_id,sTime,eTime,format,h1,m1;
     private FirebaseAuth mAuth;
     private DatabaseReference myRoutine;
@@ -47,11 +51,17 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
         courseTeacher = findViewById(R.id.et_course_teacher);
         roomNo = findViewById(R.id.et_room_no);
 
+        courseNameLayout = findViewById(R.id.editTextCourseName);
+        courseCodeLayout = findViewById(R.id.editTextCourseCode);
+        courseTeacherLayout = findViewById(R.id.editTextCourseTeacherName);
+        roomNoLayout = findViewById(R.id.editTextCourseRoomNo);
+
         startTime = findViewById(R.id.start_time);
         endTime = findViewById(R.id.end_time);
         start = findViewById(R.id.cv_start_time);
         end = findViewById(R.id.cv_end_time);
         addRoutine = findViewById(R.id.cv_add_routine);
+
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid();
@@ -106,7 +116,7 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
                             m1 = ""+selectedMinute;
                         }
 
-                        startTime.setText( h1 + ":" + m1+" "+format);
+                        start.setText( h1 + ":" + m1+" "+format);
                         sTime = ""+h1 + ":" + ""+m1+" "+format ;
                     }
 
@@ -150,7 +160,7 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
                             m1 = ""+selectedMinute;
                         }
 
-                        endTime.setText( h1 + ":" + m1+" "+format);
+                        end.setText( h1 + ":" + m1+" "+format);
                        eTime = ""+h1 + ":" + ""+m1+" "+format ;
 
                     }
@@ -179,19 +189,40 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
                     Toast.makeText(AddRoutine.this, "Select Class Start Time", Toast.LENGTH_SHORT).show();
                 }else if(eTime==null){
                     Toast.makeText(AddRoutine.this, "Select Class End Time", Toast.LENGTH_SHORT).show();
-                }else if (name.isEmpty()) {
-                    courseName.setError("empty field");
-                    courseName.requestFocus();
-                } else if (code.isEmpty()) {
-                    courseCode.setError("empty field");
-                    courseCode.requestFocus();
-                }else if (teacher.isEmpty()) {
-                    courseTeacher.setError("empty field");
-                    courseTeacher.requestFocus();
-                } else if (room.isEmpty()) {
-                    roomNo.setError("empty field");
-                    roomNo.requestFocus();
-                }else {
+                }else if (name.isEmpty() || code.isEmpty() || teacher.isEmpty() || room.isEmpty()){
+
+                    if (name.isEmpty()) {
+                        courseNameLayout.setError("empty field");
+                        courseName.requestFocus();
+                    }else {
+                        courseNameLayout.setErrorEnabled(false);
+                    }
+
+                    if (code.isEmpty()) {
+                        courseCodeLayout.setError("empty field");
+                        courseCode.requestFocus();
+                    }else {
+                        courseCodeLayout.setErrorEnabled(false);
+                    }
+
+                    if (teacher.isEmpty()) {
+                        courseTeacherLayout.setError("empty field");
+                        courseTeacher.requestFocus();
+                    }
+                    else {
+                        courseTeacherLayout.setErrorEnabled(false);
+                    }
+
+                    if (room.isEmpty()) {
+                        roomNoLayout.setError("empty field");
+                        roomNo.requestFocus();
+                    }
+                    else {
+                        roomNoLayout.setErrorEnabled(false);
+                    }
+
+                }
+                else {
 
                     Map add = new HashMap();
 

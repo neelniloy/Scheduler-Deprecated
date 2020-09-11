@@ -5,4 +5,12 @@
         <item name="windowActionBar">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryDark">#1180D8</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
 </resources>

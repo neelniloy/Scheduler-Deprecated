@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,17 +35,16 @@ public class Login extends AppCompatActivity {
 
     private TextView signUp;
     private TextView forgotPass;
-    private EditText userEmail, userPassword;
+    private TextInputLayout emailLayout, passLayout;
+    private TextInputEditText userEmail, userPassword;
     private ProgressDialog progressDialog;
-    private CardView btnLogin;
+    private Button btnLogin;
     private FirebaseAuth mfirebaseAuth;
     private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
-    private ImageView vPass;
-    private boolean isShowPassword = false;
-    private String useremail,userpassword;
+    private String useremail, userpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class Login extends AppCompatActivity {
         userPassword =  findViewById(R.id.et_pass);
         forgotPass = findViewById(R.id.tv_forgotpass) ;
         btnLogin = findViewById(R.id.cv_login);
-        vPass = findViewById(R.id.imgLogPass);
+        emailLayout = findViewById(R.id.editTextEmailLayout);
+        passLayout = findViewById(R.id.editTextPassLayout);
 
 
         saveLoginCheckBox = (CheckBox)findViewById(R.id.saveLoginCheckBox);
@@ -89,23 +92,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-
-        vPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isShowPassword) {
-                    userPassword.setTransformationMethod(new PasswordTransformationMethod());
-                    vPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_blue));
-                    isShowPassword = false;
-                }else{
-                    userPassword.setTransformationMethod(null);
-                    vPass.setImageDrawable(getResources().getDrawable(R.drawable.ic_pass_visibility_blue));
-                    isShowPassword = true;
-                }
-            }
-        });
-
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,23 +112,32 @@ public class Login extends AppCompatActivity {
                     loginPrefsEditor.commit();
                 }
 
-
-
                 String email = userEmail.getText().toString();
                 String password = userPassword.getText().toString();
 
-                if (email.isEmpty()) {
-                    userEmail.setError("invalid email");
-                    userEmail.requestFocus();
-                } else if (password.isEmpty()) {
-                    userPassword.setError("invalid password");
-                    userPassword.requestFocus();
-                } else if (email.isEmpty() && password.isEmpty()) {
+                if (email.isEmpty() || password.isEmpty()) {
 
-                    Toast.makeText(Login.this, "Enter a valid Email & Password", Toast.LENGTH_SHORT).show();
+                    if (email.isEmpty()) {
+                        emailLayout.setError("*Email required");
+                        userEmail.requestFocus();
+                    }
+                    else {
+                        emailLayout.setErrorEnabled(false);
+                    }
+                    if (password.isEmpty()) {
+                        passLayout.setError("*Password required");
+                        userPassword.requestFocus();
+                    }
+                    else {
+                        passLayout.setErrorEnabled(false);
+                    }
+
                 }else if (!(isNetworkAvaliable(Login.this))) {
+
                     Toast.makeText(Login.this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+
                 }
+
                 else if (!(email.isEmpty() && password.isEmpty())) {
 
                     progressDialog = new ProgressDialog(Login.this);
