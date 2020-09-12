@@ -1,7 +1,10 @@
 package com.sarker.scheduler;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +34,9 @@ public class ManageRoutine extends AppCompatActivity {
     private TextView emptyRoutine;
     private FirebaseAuth mAuth;
     private String current_user_id;
+    private TextView accessKey;
+    private Button btnDelete;
+    private ProgressDialog progressDialog;
 
     private String[] day = { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
 
@@ -39,6 +45,9 @@ public class ManageRoutine extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_routine);
+
+        accessKey = findViewById(R.id.tv_access_key);
+        btnDelete = findViewById(R.id.btn_import_delete);
 
         emptyRoutine = findViewById(R.id.empty_routine);
         mRecyclerView = findViewById(R.id.mrecycler_view);
@@ -71,7 +80,30 @@ public class ManageRoutine extends AppCompatActivity {
 
                 long count = dataSnapshot.getChildrenCount();
 
-                if(count>2){
+                if (dataSnapshot.child("Import").exists() && !dataSnapshot.child("Import").getValue().toString().equals(" ")){
+                   String key = dataSnapshot.child("Import").getValue(String.class);
+                   accessKey.setText("Access Key : "+key);
+                    accessKey.setVisibility(View.VISIBLE);
+                    btnDelete.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    if(!dataSnapshot.child("Own").exists()){
+
+                        emptyRoutine.setVisibility(View.VISIBLE);
+                        mProgressCircle.setVisibility(View.INVISIBLE);
+
+                    }else {
+                        emptyRoutine.setVisibility(View.GONE);
+                        mProgressCircle.setVisibility(View.INVISIBLE);
+                    }
+
+
+                }
+
+
+
+                if(count>1){
                     if(dataSnapshot.exists()){
 
                         mList.clear();
@@ -110,6 +142,32 @@ public class ManageRoutine extends AppCompatActivity {
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                progressDialog = new ProgressDialog(ManageRoutine.this);
+                progressDialog.show();
+                progressDialog.setMessage("Removing...");
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        progressDialog.dismiss();
+
+                        accessKey.setVisibility(View.GONE);
+                        btnDelete.setVisibility(View.GONE);
+                        mDatabaseRef.child("Import").setValue(" ");
+
+                        Toast.makeText(ManageRoutine.this, "Successfully Removed", Toast.LENGTH_SHORT).show();
+
+                    }
+                },1500);
+
+            }
         });
 
 

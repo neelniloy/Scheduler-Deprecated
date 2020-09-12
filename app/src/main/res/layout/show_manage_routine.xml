@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="15dp">
+    android:padding="5dp">
 
     <TextView
         android:layout_centerHorizontal="true"
@@ -22,7 +22,7 @@
     <androidx.cardview.widget.CardView
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         app:cardCornerRadius="8dp">
 
         <RelativeLayout
@@ -40,77 +40,22 @@
         </RelativeLayout>
 
 
-
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
-            >
 
-            <TextView
-                android:id="@+id/class_time"
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="5dp"
-                android:textIsSelectable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:fontFamily="serif"
-                android:text="08:30 AM - 10:00 AM"
-                android:textAlignment="center"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal" />
-
-            <ImageView
-                android:layout_marginLeft="15sp"
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                app:srcCompat="@drawable/ic_edit"
-                tools:ignore="VectorDrawableCompat" />
-            <TextView
-                android:layout_marginLeft="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edit"
-                android:text="Edit"
-                android:textSize="14sp"
-                android:textColor="@color/colorBlack"/>
-            <ImageView
-                android:layout_marginLeft="80dp"
-                android:id="@+id/delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                app:srcCompat="@drawable/ic_delete"
-                tools:ignore="VectorDrawableCompat" />
-            <TextView
-                android:layout_marginLeft="80dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/delete"
-                android:text="Delete"
-                android:textSize="14sp"
-                android:textColor="@color/colorBlack"/>
-
-        </RelativeLayout>
-
-        <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="10dp">
 
             <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/RL2"
                 android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                >
+                android:layout_toLeftOf="@+id/RL2">
 
 
                 <TextView
@@ -120,10 +65,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000"
                     android:text="Algorithm"
-                    android:textAlignment="center"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:gravity="center_horizontal" />
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/course_code"
                     android:layout_marginTop="5dp"
@@ -166,7 +109,66 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_alignParentRight="true"
+                android:id="@+id/RL2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/class_time"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:textIsSelectable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:fontFamily="serif"
+                    android:text="08:30 AM - 10:00 AM"
+                    android:textAlignment="center"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal" />
+
+                <ImageView
+                    android:layout_marginLeft="15sp"
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    tools:ignore="VectorDrawableCompat" />
+                <TextView
+                    android:layout_marginLeft="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edit"
+                    android:text="Edit"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"/>
+                <ImageView
+                    android:layout_marginLeft="80dp"
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    app:srcCompat="@drawable/ic_delete"
+                    tools:ignore="VectorDrawableCompat" />
+                <TextView
+                    android:layout_marginLeft="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/delete"
+                    android:text="Delete"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

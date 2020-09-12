@@ -38,7 +38,7 @@ public class Thursday extends Fragment {
     private ProgressBar rProgressCircle;
     private ImageView noClass;
     private FirebaseAuth mAuth;
-    private String current_user_id,importKey;
+    private String current_user_id,importKey = " ";
 
 
     public Thursday() {
@@ -71,10 +71,46 @@ public class Thursday extends Fragment {
 
         rDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.child("Import").exists()){
                     importKey = dataSnapshot.child("Import").getValue().toString();
+
+                    importRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot2) {
+
+                            if(dataSnapshot2.child(importKey).child("Own").child("Thursday").exists()){
+                                rAdapter.notifyDataSetChanged();
+
+                                for (DataSnapshot postSnapshot : dataSnapshot2.child(importKey).child("Own").child("Thursday").getChildren()) {
+
+                                    RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
+                                    info.setRoutineKey(postSnapshot.getKey());
+                                    rList.add(info);
+
+                                }
+                                rAdapter.notifyDataSetChanged();
+                                rProgressCircle.setVisibility(View.INVISIBLE);
+
+                            }
+                            else {
+
+                                if(!dataSnapshot.child("Own").child("Thursday").exists()){
+                                    noClass.setVisibility(View.VISIBLE);
+                                }
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            rProgressCircle.setVisibility(View.INVISIBLE);
+                        }
+
+                    });
                 }
 
                 if(dataSnapshot.child("Own").child("Thursday").exists()){
@@ -95,35 +131,10 @@ public class Thursday extends Fragment {
                 }
                 else {
 
-                    noClass.setVisibility(View.VISIBLE);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                rProgressCircle.setVisibility(View.INVISIBLE);
-            }
-
-        });
-
-        importRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.exists()){
-                    rAdapter.notifyDataSetChanged();
-
-                    for (DataSnapshot postSnapshot : dataSnapshot.child(importKey).child("Own").child("Thursday").getChildren()) {
-
-                        RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
-                        info.setRoutineKey(postSnapshot.getKey());
-                        rList.add(info);
-
+                    if (importKey.equals(" ")){
+                        rProgressCircle.setVisibility(View.INVISIBLE);
+                        noClass.setVisibility(View.VISIBLE);
                     }
-                    rAdapter.notifyDataSetChanged();
 
                 }
 
@@ -136,6 +147,8 @@ public class Thursday extends Fragment {
             }
 
         });
+
+
 
 
 

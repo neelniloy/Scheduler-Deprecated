@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 builder.setTitle("About Scheduler");
                 builder.setIcon(R.drawable.logo);
                 builder.setCancelable(true);
-                builder.setMessage("Basically this app made to manage our class routine easily. This is mainly a cloud base app. It has also offline access feature. So whenever you want to see the class schedule or added a new schedule you can do it without an internet connection.\n\nDeveloper - Niloy Kumar Sarker\n")
+                builder.setMessage("Basically this app made to manage our class routine easily. This is mainly a cloud base app. It has also offline access feature. So whenever you want to see the class schedule or added a new schedule you can do it without an internet connection. \n\n - Niloy Kumar Sarker\n\n - Rozanee Kanta Das")
                         .setPositiveButton("Visit Me", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

@@ -137,7 +137,8 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
                     holder.clock0.setVisibility(View.VISIBLE);
 
 
-                    editor.putString("key", info.routineKey);
+                    //editor.putString("key", info.routineKey);
+                    editor.clear();
                     editor.apply();
 
                     Toast.makeText(nContext, "Alarm Canceled", Toast.LENGTH_SHORT).show();
