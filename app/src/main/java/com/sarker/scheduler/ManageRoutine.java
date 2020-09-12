@@ -71,7 +71,7 @@ public class ManageRoutine extends AppCompatActivity {
 
                 long count = dataSnapshot.getChildrenCount();
 
-                if(count>1){
+                if(count>2){
                     if(dataSnapshot.exists()){
 
                         mList.clear();
@@ -81,7 +81,7 @@ public class ManageRoutine extends AppCompatActivity {
 
                             String days_of_week = day[i];
 
-                            for (DataSnapshot postSnapshot : dataSnapshot.child(days_of_week).getChildren()) {
+                            for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child(days_of_week).getChildren()) {
 
                                 RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
                                 info.setRoutineKey(postSnapshot.getKey());

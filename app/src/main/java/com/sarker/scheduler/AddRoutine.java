@@ -2,6 +2,7 @@ package com.sarker.scheduler;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -20,7 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -226,16 +229,15 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
 
                     Map add = new HashMap();
 
-                    add.put("alarm", "false");
                     add.put("classTime", sTime+" - "+eTime);
                     add.put("courseCode", code);
                     add.put("courseTeacher", teacher);
                     add.put("courseName", name);
                     add.put("day", day);
                     add.put("roomNo", room);
-                    add.put("randomKey", r);
+                    add.put("randomKey", getDateInMillis(sTime));
 
-                    myRoutine.child(day).push().updateChildren(add);
+                    myRoutine.child("Own").child(day).child(""+getDateInMillis(sTime)).updateChildren(add);
 
                     Toast.makeText(AddRoutine.this, "Routine Added Successfully", Toast.LENGTH_SHORT).show();
 
@@ -256,6 +258,22 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO - Custom Code
+    }
+
+    public static long getDateInMillis(String srcDate) {
+        SimpleDateFormat desiredFormat = new SimpleDateFormat(
+                "hh:mm aa");
+
+        long dateInMillis = 0;
+        try {
+            Date date = desiredFormat.parse(srcDate);
+            dateInMillis = date.getTime();
+            return dateInMillis;
+        } catch (ParseException | java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
 }

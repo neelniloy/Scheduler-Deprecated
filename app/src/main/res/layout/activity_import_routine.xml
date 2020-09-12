@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="By clicking import your all routine\ndata will be overwritten with new one
+        android:text="By clicking import your previous import routine\ndata will be overwritten with new one
 "
         android:textAlignment="center"
         android:textColor="@color/colorBlack"

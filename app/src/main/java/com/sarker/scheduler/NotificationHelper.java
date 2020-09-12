@@ -12,6 +12,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 
 import androidx.core.app.NotificationCompat;
 
@@ -50,9 +51,17 @@ public class NotificationHelper extends ContextWrapper {
     public NotificationCompat.Builder getChannelNotification() {
 
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        MediaPlayer player = MediaPlayer.create(this, notification);
+        final MediaPlayer player = MediaPlayer.create(this, notification);
         player.setLooping(true);
         player.start();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                player.stop();
+
+            }
+        },7000);
 
         NotificationCompat.Builder notificationBuilder  = new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Class Reminder!")

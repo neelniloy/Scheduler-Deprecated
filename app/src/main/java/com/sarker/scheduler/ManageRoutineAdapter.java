@@ -45,9 +45,7 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
         final RoutineInfo info = rList.get(position);
 
         final String routineKey = info.getRoutineKey().toString();
-        final String status = info.getAlarm();
         final String day = info.getDay();
-        final String key = info.getRandomKey();
 
         holder.courseTitle.setText(info.getCourseName());
         holder.courseCode.setText(info.getCourseCode());
@@ -84,7 +82,7 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
 
                         progressDialog1.dismiss();
 
-                        holder.databaseReference.child(day).child(routineKey).removeValue();
+                        holder.databaseReference.child("Own").child(day).child(routineKey).removeValue();
                         rList.remove(holder.getAdapterPosition());
                         notifyDataSetChanged();
 

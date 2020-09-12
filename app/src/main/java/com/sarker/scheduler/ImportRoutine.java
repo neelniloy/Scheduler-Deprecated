@@ -86,15 +86,12 @@ public class ImportRoutine extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()){
 
-                                        user.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
+                                                user.child("Import").setValue(rKey);
 
                                                 Toast.makeText(ImportRoutine.this, "Import Successfully", Toast.LENGTH_SHORT).show();
 
                                                 Intent n = new Intent(ImportRoutine.this, MainActivity.class); startActivity(n);
-                                            }
-                                        });
+
                                     }
                                     else {
                                         Toast.makeText(ImportRoutine.this, "Invalid Routine Key", Toast.LENGTH_SHORT).show();

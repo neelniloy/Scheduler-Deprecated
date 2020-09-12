@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +30,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
     private Context nContext;
     private ArrayList<RoutineInfo> rList;
     private  int code;
-    private String sub;
 
 
     public RoutineAdapter(Context context, ArrayList<RoutineInfo> rLists) {
@@ -45,12 +46,11 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
 
     @Override
     public void onBindViewHolder(final NewsViewHolder holder, int position) {
+
         final RoutineInfo info = rList.get(position);
 
         final String routineKey = info.getRoutineKey().toString();
-        final String status = info.getAlarm();
         final String day = info.getDay();
-        final String key = info.getRandomKey();
 
         holder.courseTitle.setText(info.getCourseName());
         holder.courseCode.setText(info.getCourseCode());
@@ -58,28 +58,27 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
         holder.courseTeacher.setText(info.getCourseTeacher());
         holder.classTime.setText(info.getClassTime());
 
-        if (status.equals("true")){
-            holder.clock.setImageResource(R.drawable.ic_notify1);
+
+        SharedPreferences preferences = nContext.getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+
+        String key = preferences.getString("key", "");
+
+        if(key.equals(info.routineKey)){
+            holder.clock1.setVisibility(View.VISIBLE);
+            holder.clock0.setVisibility(View.GONE);
         }else {
-            holder.clock.setImageResource(R.drawable.ic_notify0);
+            holder.clock0.setVisibility(View.VISIBLE);
+            holder.clock1.setVisibility(View.GONE);
         }
 
 
-        holder.clock.setOnClickListener(new View.OnClickListener() {
+        holder.clock0.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
 
-                code = Integer.parseInt(key);
-
-                if (status.equals("true")){
-
-                    cancelAlarm(code);
-                    holder.clock.setImageResource(R.drawable.ic_notify0);
-                    holder.databaseReference.child(day).child(routineKey).child("alarm").setValue("false");
-                    Toast.makeText(nContext, "Alarm Canceled", Toast.LENGTH_SHORT).show();
-
-                }else {
+                code = Integer.parseInt(routineKey)/1000;
 
                     int a,b;
                     String time = info.getClassTime().substring(0,2);
@@ -110,18 +109,43 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
                     c.set(Calendar.MINUTE, b);
                     c.set(Calendar.SECOND, 0);
 
-                    holder.databaseReference.child(day).child(routineKey).child("alarm").setValue("true");
-                    holder.clock.setImageResource(R.drawable.ic_notify1);
+                    editor.putString("key", info.routineKey);
+                    editor.apply();
 
-                    sub = info.getCourseName();
+                holder.clock0.setVisibility(View.GONE);
+                holder.clock1.setVisibility(View.VISIBLE);
                     startAlarm(c,code);
                     Toast.makeText(nContext, "Alarm Activated", Toast.LENGTH_SHORT).show();
 
-                }
+
 
                 }
 
         });
+
+
+        holder.clock1.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+
+                code = Integer.parseInt(routineKey)/1000;
+
+
+                    cancelAlarm(code);
+                    holder.clock1.setVisibility(View.GONE);
+                    holder.clock0.setVisibility(View.VISIBLE);
+
+
+                    editor.putString("key", info.routineKey);
+                    editor.apply();
+
+                    Toast.makeText(nContext, "Alarm Canceled", Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+
 
     }
 
@@ -134,7 +158,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
     public class NewsViewHolder extends RecyclerView.ViewHolder {
 
         public TextView courseTitle, courseCode, courseTeacher, roomNo, classTime;
-        public ImageView clock;
+        public ImageView clock0,clock1;
         public DatabaseReference databaseReference;
         public FirebaseAuth mAuth;
         public String current_user_id;
@@ -147,7 +171,8 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
             courseTeacher = itemView.findViewById(R.id.course_teacher);
             roomNo = itemView.findViewById(R.id.room_no);
             classTime = itemView.findViewById(R.id.class_time);
-            clock = itemView.findViewById(R.id.set_alarm);
+            clock0 = itemView.findViewById(R.id.set_alarm0);
+            clock1 = itemView.findViewById(R.id.set_alarm1);
 
             mAuth = FirebaseAuth.getInstance();
             current_user_id = mAuth.getCurrentUser().getUid();

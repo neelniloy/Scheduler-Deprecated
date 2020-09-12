@@ -18,7 +18,7 @@ public class SetAlarm extends BroadcastReceiver {
         notificationHelper.getManager().notify(1, nb.build());
 
         Vibrator v = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-        v.vibrate(2000);
+        v.vibrate(1500);
 
     }
 }

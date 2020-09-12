@@ -62,6 +62,7 @@ public class Login extends AppCompatActivity {
 
 
         saveLoginCheckBox = (CheckBox)findViewById(R.id.saveLoginCheckBox);
+
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
 

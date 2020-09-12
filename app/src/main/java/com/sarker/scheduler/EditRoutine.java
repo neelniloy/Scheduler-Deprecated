@@ -2,7 +2,9 @@ package com.sarker.scheduler;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +39,9 @@ public class EditRoutine extends AppCompatActivity {
     private TextInputLayout courseNameLayout, courseCodeLayout ,courseTeacherLayout ,roomNoLayout;
     private TextView startTime,endTime,dayE;
     private Button start,end,upRoutine;
-    private String day,current_user_id,sTime,eTime,format,h1,m1,alarm,classTime,cName,cTeacher,cCode,rNo,ranKey;
+    private String day,current_user_id,sTime,eTime,format,h1,m1,classTime,cName,cTeacher,cCode,rNo,key;
     private FirebaseAuth mAuth;
-    private DatabaseReference myRoutine;
+    private DatabaseReference myRoutine,myRoutine2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,36 +68,39 @@ public class EditRoutine extends AppCompatActivity {
 
         Intent i = getIntent();
         day = i.getStringExtra("day");
-        String key = i.getStringExtra("key");
+        key = i.getStringExtra("key");
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid();
-        myRoutine = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14)).child(day).child(key);
+        myRoutine = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14)).child("Own").child(day).child(key);
+        myRoutine2 = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14)).child("Own").child(day);
 
         myRoutine.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                 alarm = snapshot.child("alarm").getValue(String.class);
-                 classTime = snapshot.child("classTime").getValue(String.class);
-                cCode = snapshot.child("courseCode").getValue(String.class);
-                 cTeacher = snapshot.child("courseTeacher").getValue(String.class);
-                cName = snapshot.child("courseName").getValue(String.class);
-                day = snapshot.child("day").getValue(String.class);
-                rNo = snapshot.child("roomNo").getValue(String.class);
-                ranKey = snapshot.child("randomKey").getValue(String.class);
+                if (snapshot.exists()){
 
-                sTime = classTime.substring(0,8);
-                eTime = classTime.substring(11,19);
+                    classTime = snapshot.child("classTime").getValue(String.class);
+                    cCode = snapshot.child("courseCode").getValue(String.class);
+                    cTeacher = snapshot.child("courseTeacher").getValue(String.class);
+                    cName = snapshot.child("courseName").getValue(String.class);
+                    day = snapshot.child("day").getValue(String.class);
+                    rNo = snapshot.child("roomNo").getValue(String.class);
 
-                start.setText(classTime.substring(0,8));
-                end.setText(classTime.substring(11,19));
-                dayE.setText(day);
-                courseName.setText(cName);
-                courseCode.setText(cCode);
-                courseTeacher.setText(cTeacher);
-                roomNo.setText(rNo);
+                    sTime = classTime.substring(0,8);
+                    eTime = classTime.substring(11,19);
 
+                    start.setText(classTime.substring(0,8));
+                    end.setText(classTime.substring(11,19));
+                    dayE.setText(day);
+                    courseName.setText(cName);
+                    courseCode.setText(cCode);
+                    courseTeacher.setText(cTeacher);
+                    roomNo.setText(rNo);
+
+
+                }
 
             }
 
@@ -247,28 +254,62 @@ public class EditRoutine extends AppCompatActivity {
 
                     Map add = new HashMap();
 
-                    add.put("alarm", alarm);
                     add.put("classTime", sTime+" - "+eTime);
                     add.put("courseCode", code);
                     add.put("courseTeacher", teacher);
                     add.put("courseName", name);
                     add.put("day", day);
                     add.put("roomNo", room);
-                    add.put("randomKey", ranKey);
+                    add.put("randomKey", getDateInMillis(sTime));
+
+                    if (key.equals(""+getDateInMillis(sTime))){
+                        myRoutine2.child(key).updateChildren(add);
+                    }
+                    else {
+
+                        myRoutine2.child(""+getDateInMillis(sTime)).updateChildren(add);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                myRoutine2.child(key).removeValue();
+                                key = ""+getDateInMillis(sTime);
+
+                            }
+                        },1500);
+
+                    }
 
 
-                    myRoutine.updateChildren(add);
 
                     Toast.makeText(EditRoutine.this, "Routine Update Successfully", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(EditRoutine.this, MainActivity.class);
                     intent.putExtra("day", day);
                     EditRoutine.this.startActivity(intent);
+                    finish();
                 }
 
             }
         });
 
 
+    }
+
+    public static long getDateInMillis(String srcDate) {
+        SimpleDateFormat desiredFormat = new SimpleDateFormat(
+                "hh:mm aa");
+
+        long dateInMillis = 0;
+        try {
+            Date date = desiredFormat.parse(srcDate);
+            dateInMillis = date.getTime();
+            return dateInMillis;
+        } catch (ParseException | java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

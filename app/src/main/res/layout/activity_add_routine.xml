@@ -170,7 +170,7 @@
             android:id="@+id/editTextCourseTeacherName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_course_name"
+            app:startIconDrawable="@drawable/ic_person_blue"
             app:startIconTint="#2196F3"
             android:hint="Course Teacher Name"
             app:endIconMode="clear_text"
