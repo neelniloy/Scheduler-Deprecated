@@ -19,4 +19,4 @@ Added Soon
 
 ## Contributors
 - Niloy Kumar Sarker  [![facebook](https://img.shields.io/badge/follow-facebook-red?style=social&logo=facebook)](https://fb.com/N33LNILOY)
-- Rozanee Kanta Das  [![facebook](https://img.shields.io/badge/follow-facebook-red?style=social&logo=facebook)](https://fb.com/N33LNILOY)
+- Rozanee Kanta Das  [![facebook](https://img.shields.io/badge/follow-facebook-red?style=social&logo=facebook)](https://fb.com/razanee.razanee)
