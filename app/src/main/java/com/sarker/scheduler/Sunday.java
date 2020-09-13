@@ -118,7 +118,7 @@ public class Sunday extends Fragment {
 
                 if(dataSnapshot.child("Own").child("Sunday").exists()){
 
-                    rList.clear();
+                    //rList.clear();
                     rAdapter.notifyDataSetChanged();
 
                     for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child("Sunday").getChildren()) {

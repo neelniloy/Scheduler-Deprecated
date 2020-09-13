@@ -53,37 +53,39 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/tab_layout_color"
                 app:tabTextColor="@color/colorBlack"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabMode="scrollable"
                 >
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/saturday"
-                    android:text="Sat"/>
+                    android:text="Saturday"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/sunday"
-                    android:text="Sun"/>
+                    android:text="Sunday" />
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/monday"
-                    android:text="Mon"/>
+                    android:text="Monday"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tuesday"
-                    android:text="Tue"/>
+                    android:text="Tuesday"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/wednesday"
-                    android:text="Wed"/>
+                    android:text="Wednesday"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/thursday"
-                    android:text="Thu"/>
+                    android:text="Thursday"/>
 
             </com.google.android.material.tabs.TabLayout>
 
