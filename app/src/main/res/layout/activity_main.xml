@@ -51,7 +51,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/tab_layout_color"
                 app:tabTextColor="@color/colorBlack"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 app:tabMode="scrollable"
                 >
 

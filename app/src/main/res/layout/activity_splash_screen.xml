@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/log_in_color"
+    tools:context=".SplashScreen">
+
+
+
+
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/logo" />
+
+
+
+    <LinearLayout
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="An Open Source Initiative by"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/cpc"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:src="@drawable/cpc" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

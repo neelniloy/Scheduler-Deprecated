@@ -19,18 +19,21 @@
         <activity android:name=".ImportRoutine" />
         <activity android:name=".AddRoutine" android:theme="@style/Theme.MyApp" />
         <activity android:name=".MyRoutineKey" />
-        <activity android:name=".Registration" android:theme="@style/Theme.MyApp"/>
-        <activity
-            android:name=".mainview.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login"
-            android:theme="@style/Theme.MyApp">
+
+        <activity android:name=".SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".Registration" android:theme="@style/Theme.MyApp"/>
+        <activity
+            android:name=".mainview.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Login"
+            android:theme="@style/Theme.MyApp"/>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Intent i = getIntent();
+        day = i.getStringExtra("day");
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         name = headerView.findViewById(R.id.name);
@@ -143,36 +147,76 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPagerAdapter.addFragment(new Thursday(), "THURSDAY");
         viewPager.setAdapter(viewPagerAdapter);
 
-        switch (dayName){
 
-            case Calendar.SATURDAY:
-                viewPager.setCurrentItem(0);
-                break;
+        if(day!=null) {
 
-            case Calendar.SUNDAY:
-                viewPager.setCurrentItem(1);
-                break;
+            switch (day) {
 
-            case Calendar.MONDAY:
-                viewPager.setCurrentItem(2);
-                break;
+                case "Saturday":
+                    viewPager.setCurrentItem(0);
+                    break;
 
-            case Calendar.TUESDAY:
-                viewPager.setCurrentItem(3);
-                break;
+                case "Sunday":
+                    viewPager.setCurrentItem(1);
+                    break;
 
-            case Calendar.WEDNESDAY:
-                viewPager.setCurrentItem(4);
-                break;
+                case "Monday":
+                    viewPager.setCurrentItem(2);
+                    break;
 
-            case Calendar.THURSDAY:
-                viewPager.setCurrentItem(5);
-                break;
+                case "Tuesday":
+                    viewPager.setCurrentItem(3);
+                    break;
 
-            default:
-                viewPager.setCurrentItem(0);
+                case "Wednesday":
+                    viewPager.setCurrentItem(4);
+                    break;
+                case "Thursday":
+                    viewPager.setCurrentItem(5);
+                    break;
+
+                default:
+                    viewPager.setCurrentItem(0);
+                    return;
+            }
+
+        }else {
+
+
+            switch (dayName){
+
+                case Calendar.SATURDAY:
+                    viewPager.setCurrentItem(0);
+                    break;
+
+                case Calendar.SUNDAY:
+                    viewPager.setCurrentItem(1);
+                    break;
+
+                case Calendar.MONDAY:
+                    viewPager.setCurrentItem(2);
+                    break;
+
+                case Calendar.TUESDAY:
+                    viewPager.setCurrentItem(3);
+                    break;
+
+                case Calendar.WEDNESDAY:
+                    viewPager.setCurrentItem(4);
+                    break;
+
+                case Calendar.THURSDAY:
+                    viewPager.setCurrentItem(5);
+                    break;
+
+                default:
+                    viewPager.setCurrentItem(0);
+
+            }
 
         }
+
+
     }
 
 
@@ -270,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onClick(DialogInterface dialog, int which) {
 
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setData(Uri.parse("https://web.facebook.com/N33LNILOY/"));
+                                intent.setData(Uri.parse("https://github.com/neelniloy/Scheduler"));
                                 startActivity(intent);
 
                                 dialog.cancel();
