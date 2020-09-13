@@ -1,4 +1,4 @@
-package com.sarker.scheduler;
+package com.sarker.scheduler.dayfragment;
 
 
 import android.os.Bundle;
@@ -70,6 +70,9 @@ public class Sunday extends Fragment {
         current_user_id = mAuth.getCurrentUser().getUid().substring(7,14);
         rDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id);
         importRef = FirebaseDatabase.getInstance().getReference("Routine");
+
+        rDatabaseRef.keepSynced(true);
+        importRef.keepSynced(true);
 
 
         rDatabaseRef.addValueEventListener(new ValueEventListener() {

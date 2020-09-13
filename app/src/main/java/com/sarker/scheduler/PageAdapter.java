@@ -5,55 +5,35 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
+
 public class PageAdapter extends FragmentPagerAdapter {
 
-    private int numoftab;
-    public PageAdapter(@NonNull FragmentManager fm,int numofTab) {
-        super(fm);
+    final ArrayList<Fragment> fragmentList = new ArrayList<>();
+    final ArrayList<String> fragmentTitle = new ArrayList<>();
 
-        this.numoftab = numofTab;
+    public PageAdapter(FragmentManager fragmentManager) {
+        super(fragmentManager);
     }
-
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
-
-        switch (position)
-        {
-            case 0 :
-                return new Saturday();
-
-            case 1 :
-                return new Sunday();
-
-            case 2 :
-                return new Monday();
-
-            case 3 :
-                return new Tuesday();
-
-            case 4 :
-                return new Wednesday();
-
-            case 5 :
-                return new Thursday();
-
-                default:
-                    return null;
-        }
-
-
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return numoftab;
+        return fragmentList.size();
+    }
+
+    public void addFragment(Fragment fragment, String title){
+        fragmentList.add(fragment);
+        fragmentTitle.add(title);
     }
 
     @Override
-    public int getItemPosition(@NonNull Object object) {
-        return POSITION_NONE;
+    public CharSequence getPageTitle(int position) {
+        return fragmentTitle.get(position);
     }
 }

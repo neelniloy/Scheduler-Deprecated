@@ -1,4 +1,4 @@
-package com.sarker.scheduler;
+package com.sarker.scheduler.dayfragment;
 
 
 import android.os.Bundle;
@@ -29,18 +29,19 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Wednesday extends Fragment {
+public class Thursday extends Fragment {
 
     private RecyclerView rRecyclerView;
     private RoutineAdapter rAdapter;
-    private DatabaseReference rDatabaseRef,importRef;
+    private DatabaseReference rDatabaseRef,importRef = FirebaseDatabase.getInstance().getReference("Routine");;
     private ArrayList<RoutineInfo> rList;
     private ProgressBar rProgressCircle;
     private ImageView noClass;
     private FirebaseAuth mAuth;
     private String current_user_id,importKey = " ";
 
-    public Wednesday() {
+
+    public Thursday() {
         // Required empty public constructor
     }
 
@@ -48,10 +49,11 @@ public class Wednesday extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wednesday, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_thursday, container, false);
 
         noClass = view.findViewById(R.id.no_classes);
-        rRecyclerView = view.findViewById(R.id.recycler_view5);
+        rRecyclerView = view.findViewById(R.id.recycler_view6);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rRecyclerView.setLayoutManager(linearLayoutManager);
         rList = new ArrayList<>();
@@ -59,13 +61,16 @@ public class Wednesday extends Fragment {
         rRecyclerView.setAdapter(rAdapter);
 
 
-        rProgressCircle = view.findViewById(R.id.progress_circle5);
+        rProgressCircle = view.findViewById(R.id.progress_circle6);
 
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid().substring(7,14);
         rDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id);
         importRef = FirebaseDatabase.getInstance().getReference("Routine");
+
+        rDatabaseRef.keepSynced(true);
+        importRef.keepSynced(true);
 
         rDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,10 +83,10 @@ public class Wednesday extends Fragment {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot2) {
 
-                            if(dataSnapshot2.child(importKey).child("Own").child("Wednesday").exists()){
+                            if(dataSnapshot2.child(importKey).child("Own").child("Thursday").exists()){
                                 rAdapter.notifyDataSetChanged();
 
-                                for (DataSnapshot postSnapshot : dataSnapshot2.child(importKey).child("Own").child("Wednesday").getChildren()) {
+                                for (DataSnapshot postSnapshot : dataSnapshot2.child(importKey).child("Own").child("Thursday").getChildren()) {
 
                                     RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
                                     info.setRoutineKey(postSnapshot.getKey());
@@ -94,7 +99,7 @@ public class Wednesday extends Fragment {
                             }
                             else {
 
-                                if(!dataSnapshot.child("Own").child("Wednesday").exists()){
+                                if(!dataSnapshot.child("Own").child("Thursday").exists()){
                                     noClass.setVisibility(View.VISIBLE);
                                 }
 
@@ -111,12 +116,12 @@ public class Wednesday extends Fragment {
                     });
                 }
 
-                if(dataSnapshot.child("Own").child("Wednesday").exists()){
+                if(dataSnapshot.child("Own").child("Thursday").exists()){
 
                     //rList.clear();
                     rAdapter.notifyDataSetChanged();
 
-                    for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child("Wednesday").getChildren()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child("Thursday").getChildren()) {
 
                         RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
                         info.setRoutineKey(postSnapshot.getKey());
@@ -145,6 +150,7 @@ public class Wednesday extends Fragment {
             }
 
         });
+
 
 
 

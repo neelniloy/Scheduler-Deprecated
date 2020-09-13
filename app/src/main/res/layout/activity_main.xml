@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".mainview.MainActivity">
 
     <LinearLayout
 
@@ -27,8 +27,6 @@
                 android:id="@+id/tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize">
-
-
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -56,36 +54,6 @@
                 app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 app:tabMode="scrollable"
                 >
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/saturday"
-                    android:text="Saturday"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sunday"
-                    android:text="Sunday" />
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/monday"
-                    android:text="Monday"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tuesday"
-                    android:text="Tuesday"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/wednesday"
-                    android:text="Wednesday"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/thursday"
-                    android:text="Thursday"/>
 
             </com.google.android.material.tabs.TabLayout>
 

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sarker.scheduler.mainview.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

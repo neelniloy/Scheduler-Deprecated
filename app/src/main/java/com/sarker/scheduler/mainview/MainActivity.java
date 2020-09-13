@@ -1,4 +1,4 @@
-package com.sarker.scheduler;
+package com.sarker.scheduler.mainview;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -32,6 +32,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sarker.scheduler.AddRoutine;
+import com.sarker.scheduler.BuildConfig;
+import com.sarker.scheduler.ImportRoutine;
+import com.sarker.scheduler.Login;
+import com.sarker.scheduler.ManageRoutine;
+import com.sarker.scheduler.MyRoutineKey;
+import com.sarker.scheduler.PageAdapter;
+import com.sarker.scheduler.R;
+import com.sarker.scheduler.dayfragment.Monday;
+import com.sarker.scheduler.dayfragment.Saturday;
+import com.sarker.scheduler.dayfragment.Sunday;
+import com.sarker.scheduler.dayfragment.Thursday;
+import com.sarker.scheduler.dayfragment.Tuesday;
+import com.sarker.scheduler.dayfragment.Wednesday;
 
 import java.util.Calendar;
 
@@ -55,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String url;
     private ProgressDialog progressDialog;
 
+    private Calendar calendar = Calendar.getInstance();
+    private int dayName;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //setSupportActionBar(toolbar);
 
         mdrawerLayout = findViewById(R.id.drawer);
+
+        dayName = calendar.get(Calendar.DAY_OF_WEEK);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar, R.string.open, R.string.close);
 
@@ -107,137 +126,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
-        saturday = findViewById(R.id.saturday);
-        sunday = findViewById(R.id.sunday);
-        monday = findViewById(R.id.monday);
-        tuesday = findViewById(R.id.tuesday);
-        wednesday = findViewById(R.id.wednesday);
-        thursday = findViewById(R.id.thursday);
 
-        pagerAdapter = new PageAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
+        setUpViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
-        Intent i = getIntent();
-        day = i.getStringExtra("day");
+    }
 
-        if(day!=null) {
+    private void setUpViewPager(ViewPager viewPager) {
 
-            switch (day) {
+        PageAdapter viewPagerAdapter = new PageAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new Saturday(), "SATURDAY");
+        viewPagerAdapter.addFragment(new Sunday(), "SUNDAY");
+        viewPagerAdapter.addFragment(new Monday(), "MONDAY");
+        viewPagerAdapter.addFragment(new Tuesday(), "TUESDAY");
+        viewPagerAdapter.addFragment(new Wednesday(), "WEDNESDAY");
+        viewPagerAdapter.addFragment(new Thursday(), "THURSDAY");
+        viewPager.setAdapter(viewPagerAdapter);
 
-                case "Saturday":
-                    viewPager.setCurrentItem(0);
-                    break;
+        switch (dayName){
 
-                case "Sunday":
-                    viewPager.setCurrentItem(1);
-                    break;
+            case Calendar.SATURDAY:
+                viewPager.setCurrentItem(0);
+                break;
 
-                case "Monday":
-                    viewPager.setCurrentItem(2);
-                    break;
+            case Calendar.SUNDAY:
+                viewPager.setCurrentItem(1);
+                break;
 
-                case "Tuesday":
-                    viewPager.setCurrentItem(3);
-                    break;
+            case Calendar.MONDAY:
+                viewPager.setCurrentItem(2);
+                break;
 
-                case "Wednesday":
-                    viewPager.setCurrentItem(4);
-                    break;
-                case "Thursday":
-                    viewPager.setCurrentItem(5);
-                    break;
+            case Calendar.TUESDAY:
+                viewPager.setCurrentItem(3);
+                break;
 
-                default:
-                    return;
-            }
+            case Calendar.WEDNESDAY:
+                viewPager.setCurrentItem(4);
+                break;
 
-        }else {
-            Calendar c = Calendar.getInstance();
-            int date = c.get(Calendar.DAY_OF_WEEK);
+            case Calendar.THURSDAY:
+                viewPager.setCurrentItem(5);
+                break;
 
-            switch(date){
-
-                case Calendar.SATURDAY:
-                    viewPager.setCurrentItem(0);
-                    break;
-
-                case Calendar.SUNDAY:
-                    viewPager.setCurrentItem(1);
-                    break;
-
-                case Calendar.MONDAY:
-                    viewPager.setCurrentItem(2);
-                    break;
-
-                case Calendar.TUESDAY:
-                    viewPager.setCurrentItem(3);
-                    break;
-
-                case Calendar.WEDNESDAY:
-                    viewPager.setCurrentItem(4);
-                    break;
-                case Calendar.THURSDAY:
-                    viewPager.setCurrentItem(5);
-                    break;
-
-                case Calendar.FRIDAY:
-                    viewPager.setCurrentItem(0);
-                    break;
-
-                default:
-                    return;
-
-            }
+            default:
+                viewPager.setCurrentItem(0);
 
         }
-
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-                viewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition()==0)
-                {
-                    pagerAdapter.notifyDataSetChanged();
-
-                }
-                else if(tab.getPosition()==1)
-                {
-                    pagerAdapter.notifyDataSetChanged();
-                }
-                else if(tab.getPosition()==2)
-                {
-                    pagerAdapter.notifyDataSetChanged();
-                }
-                else if(tab.getPosition()==3)
-                {
-                    pagerAdapter.notifyDataSetChanged();
-                }
-                else if(tab.getPosition()==4)
-                {
-                    pagerAdapter.notifyDataSetChanged();
-                }
-                else if(tab.getPosition()==5)
-                {
-                    pagerAdapter.notifyDataSetChanged();
-                }
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
     }
 
 

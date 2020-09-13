@@ -1,4 +1,4 @@
-package com.sarker.scheduler;
+package com.sarker.scheduler.dayfragment;
 
 
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Monday extends Fragment {
+public class Wednesday extends Fragment {
 
     private RecyclerView rRecyclerView;
     private RoutineAdapter rAdapter;
@@ -40,8 +40,7 @@ public class Monday extends Fragment {
     private FirebaseAuth mAuth;
     private String current_user_id,importKey = " ";
 
-
-    public Monday() {
+    public Wednesday() {
         // Required empty public constructor
     }
 
@@ -49,10 +48,10 @@ public class Monday extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monday, container, false);
+        View view = inflater.inflate(R.layout.fragment_wednesday, container, false);
 
         noClass = view.findViewById(R.id.no_classes);
-        rRecyclerView = view.findViewById(R.id.recycler_view3);
+        rRecyclerView = view.findViewById(R.id.recycler_view5);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rRecyclerView.setLayoutManager(linearLayoutManager);
         rList = new ArrayList<>();
@@ -60,12 +59,16 @@ public class Monday extends Fragment {
         rRecyclerView.setAdapter(rAdapter);
 
 
-        rProgressCircle = view.findViewById(R.id.progress_circle3);
+        rProgressCircle = view.findViewById(R.id.progress_circle5);
+
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid().substring(7,14);
         rDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id);
         importRef = FirebaseDatabase.getInstance().getReference("Routine");
+
+        rDatabaseRef.keepSynced(true);
+        importRef.keepSynced(true);
 
         rDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,10 +81,10 @@ public class Monday extends Fragment {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot2) {
 
-                            if(dataSnapshot2.child(importKey).child("Own").child("Monday").exists()){
+                            if(dataSnapshot2.child(importKey).child("Own").child("Wednesday").exists()){
                                 rAdapter.notifyDataSetChanged();
 
-                                for (DataSnapshot postSnapshot : dataSnapshot2.child(importKey).child("Own").child("Monday").getChildren()) {
+                                for (DataSnapshot postSnapshot : dataSnapshot2.child(importKey).child("Own").child("Wednesday").getChildren()) {
 
                                     RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
                                     info.setRoutineKey(postSnapshot.getKey());
@@ -94,7 +97,7 @@ public class Monday extends Fragment {
                             }
                             else {
 
-                                if(!dataSnapshot.child("Own").child("Monday").exists()){
+                                if(!dataSnapshot.child("Own").child("Wednesday").exists()){
                                     noClass.setVisibility(View.VISIBLE);
                                 }
 
@@ -111,12 +114,12 @@ public class Monday extends Fragment {
                     });
                 }
 
-                if(dataSnapshot.child("Own").child("Monday").exists()){
+                if(dataSnapshot.child("Own").child("Wednesday").exists()){
 
                     //rList.clear();
                     rAdapter.notifyDataSetChanged();
 
-                    for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child("Monday").getChildren()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child("Wednesday").getChildren()) {
 
                         RoutineInfo info = postSnapshot.getValue(RoutineInfo.class);
                         info.setRoutineKey(postSnapshot.getKey());

@@ -21,7 +21,7 @@
         <activity android:name=".MyRoutineKey" />
         <activity android:name=".Registration" android:theme="@style/Theme.MyApp"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".mainview.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Login"
             android:theme="@style/Theme.MyApp">
