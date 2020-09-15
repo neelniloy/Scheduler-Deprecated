@@ -88,10 +88,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000"
                     android:text="Masud Rabbani (MR)"
-                    android:textAlignment="center"
                     android:textSize="13.5sp"
-                    android:textStyle="bold"
-                    android:gravity="center_horizontal" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_marginTop="7dp"

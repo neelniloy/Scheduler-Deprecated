@@ -58,28 +58,24 @@
                 <TextView
                     android:id="@+id/course_code"
                     android:layout_marginTop="5dp"
-                    android:textIsSelectable="true"
+                    android:textIsSelectable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
                     android:text="CSE - 225"
-                    android:textAlignment="center"
-                    android:textSize="13.5sp"
                     android:textStyle="bold"
-                    android:gravity="center_horizontal" />
+                    android:textSize="13.5sp" />
 
                 <TextView
                     android:id="@+id/course_teacher"
                     android:layout_marginTop="5dp"
-                    android:textIsSelectable="true"
+                    android:textIsSelectable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
                     android:text="Masud Rabbani (MR)"
-                    android:textAlignment="center"
                     android:textSize="13.5sp"
-                    android:textStyle="bold"
-                    android:gravity="center_horizontal" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_marginTop="7dp"
