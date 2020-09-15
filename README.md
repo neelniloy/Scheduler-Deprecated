@@ -5,16 +5,22 @@ Manage Routine Like Never Before
 Basically this app made to manage our class routine easily. This is mainly a cloud base app. It has also offline access feature. So whenever you want to see the class schedule or added a new schedule you can do it without an internet connection.
                         
 ## Pre Beta Features
-- [x] Offline Routine
+- [x] Added Routine
+- [x] Manage Routine
+- [x] Import Routine From Another User
+- [x] Offline Feature
+- [x] Class Reminder
 - [x] Cloud Syncronization
 - [x] Always up-to date
+- [ ] Added Task
+- [ ] Task Reminder
 
 ## Screenshot
 Added Soon
 
 ## Download
 
-[Click here to download](https://drive.google.com/file/d/1asct6RMcyDAblaDcNGCLhecUTG9rnL1g/view?usp=sharing) ![Download](https://img.shields.io/badge/Google%20Drive-blue)
+[Click here to download](https://drive.google.com/file/d/1HPu8Nb-V2BTWecGMYqiRqnuFJutobJNY/view?usp=sharing) ![Download](https://img.shields.io/badge/Google%20Drive-blue)
 
 
 ## Contributors
