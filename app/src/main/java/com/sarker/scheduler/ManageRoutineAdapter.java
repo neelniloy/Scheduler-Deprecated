@@ -98,6 +98,16 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return rList.size();
     }

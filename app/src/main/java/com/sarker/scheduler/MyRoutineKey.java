@@ -86,7 +86,7 @@ public class MyRoutineKey extends AppCompatActivity {
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_SUBJECT, "Thanks For Sharing <3");
-                share.putExtra(Intent.EXTRA_TEXT, ""+ key);
+                share.putExtra(Intent.EXTRA_TEXT, "My Scheduler Routine Key is "+ key);
                 MyRoutineKey.this.startActivity(Intent.createChooser(share, "Share With Friends"));
 
             }

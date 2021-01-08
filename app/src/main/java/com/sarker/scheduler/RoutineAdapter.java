@@ -10,6 +10,8 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
     private Context nContext;
     private ArrayList<RoutineInfo> rList;
     private  int code;
+    private int lastPosition = -1;
 
 
     public RoutineAdapter(Context context, ArrayList<RoutineInfo> rLists) {
@@ -48,6 +51,8 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
     public void onBindViewHolder(final NewsViewHolder holder, int position) {
 
         final RoutineInfo info = rList.get(position);
+
+        setAnimation(holder.itemView, position);
 
         final String routineKey = info.getRoutineKey().toString();
         final String day = info.getDay();
@@ -148,6 +153,18 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
         });
 
 
+
+
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -201,6 +218,17 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
         PendingIntent pendingIntent = PendingIntent.getBroadcast(nContext, key, intent, 0);
         alarmManager.cancel(pendingIntent);
         Toast.makeText(nContext, "Alarm Canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
 }

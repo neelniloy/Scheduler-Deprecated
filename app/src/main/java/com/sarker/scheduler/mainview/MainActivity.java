@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -320,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 dialog.cancel();
 
                             }
-                        }).setNegativeButton("No Thanks",new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("Ok",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -335,19 +337,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_logout:
 
-                progressDialog1 = new ProgressDialog(MainActivity.this);
-                progressDialog1.show();
-                progressDialog1.setMessage("Signing Out...");
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage("Are you sure you want to log out?");
+                builder1.setCancelable(false);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog1.dismiss();
-                        finish();
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(MainActivity.this, Login.class));
-                    }
-                },SIGN_OUT);
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                progressDialog1 = new ProgressDialog(MainActivity.this);
+                                progressDialog1.show();
+                                progressDialog1.setMessage("Signing Out...");
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        FirebaseAuth.getInstance().signOut();
+                                        progressDialog1.dismiss();
+                                        finishAffinity();
+                                        startActivity(new Intent(MainActivity.this, Login.class));
+                                    }
+                                },1500);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+//        Window view=((AlertDialog)alert11).getWindow();
+//        //view.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        view.setBackgroundDrawableResource(R.drawable.dialog_shape);
+
+                Button btnPositive = alert11.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button btnNegative = alert11.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+                layoutParams.weight = 10;
+                btnPositive.setLayoutParams(layoutParams);
+                btnNegative.setLayoutParams(layoutParams);
 
                 break;
 
