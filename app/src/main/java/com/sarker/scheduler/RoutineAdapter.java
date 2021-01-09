@@ -52,7 +52,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
 
         final RoutineInfo info = rList.get(position);
 
-        setAnimation(holder.itemView, position);
+
 
         final String routineKey = info.getRoutineKey().toString();
         final String day = info.getDay();
@@ -152,9 +152,17 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
 
         });
 
+        setAnimation(holder.itemView, position);
 
 
 
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(NewsViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 
     @Override
@@ -222,9 +230,14 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
 
     private void setAnimation(View viewToAnimate, int position)
     {
-        // If the bound view wasn't previously displayed on screen, it's animated
+
         if (position > lastPosition)
         {
+            Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+        else if ( position < lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;

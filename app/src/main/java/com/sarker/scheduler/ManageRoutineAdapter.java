@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
     private  long code;
     private static int DELAY_TIME= 1800;
     private ProgressDialog progressDialog1;
+    private int lastPosition = -1;
 
 
     public ManageRoutineAdapter(Context context, ArrayList<RoutineInfo> rLists) {
@@ -93,8 +96,21 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
         });
 
 
+        setAnimation(holder.itemView, position);
+
+//        Animation animation = AnimationUtils.loadAnimation(nContext,
+//                (position > lastPosition) ? R.anim.item_animation_fall_down
+//                        : R.anim.item_animation_fall_down);
+//        holder.itemView.startAnimation(animation);
+//        lastPosition = position;
 
 
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull NewsViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 
     @Override
@@ -141,6 +157,21 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
 
         }
 
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }else if ( position < lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
 }

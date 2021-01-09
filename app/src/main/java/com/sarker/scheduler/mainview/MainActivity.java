@@ -42,6 +42,7 @@ import com.sarker.scheduler.ManageRoutine;
 import com.sarker.scheduler.MyRoutineKey;
 import com.sarker.scheduler.PageAdapter;
 import com.sarker.scheduler.R;
+import com.sarker.scheduler.Task;
 import com.sarker.scheduler.dayfragment.Monday;
 import com.sarker.scheduler.dayfragment.Saturday;
 import com.sarker.scheduler.dayfragment.Sunday;
@@ -402,6 +403,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_my_routine_key:
 
                 n = new Intent(this, MyRoutineKey.class); startActivity(n);
+                break;
+
+            case R.id.nav_task:
+
+                n = new Intent(this, Task.class); startActivity(n);
                 break;
 
         }
