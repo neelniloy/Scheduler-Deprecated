@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <item
+            android:id="@+id/nav_add_task"
+            android:icon="@drawable/ic_add_task"
+            android:title="Add Task" />
+        <item
+            android:id="@+id/nav_show_task"
+            android:icon="@drawable/ic_view_task"
+            android:title="View Task" />
+
+
+
+</menu>

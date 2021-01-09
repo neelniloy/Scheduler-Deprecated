@@ -12,7 +12,7 @@
             android:title="Manage Routine" />
         <item
             android:id="@+id/nav_task"
-            android:icon="@drawable/task"
+            android:icon="@drawable/ic_task"
             android:title="My Task" />
 
         <item
