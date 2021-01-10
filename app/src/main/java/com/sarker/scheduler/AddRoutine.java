@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private String[] users = { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
+    private String[] days = { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" };
     private ImageView back;
     private TextInputEditText courseName,courseCode,courseTeacher,roomNo;
     private TextInputLayout courseNameLayout, courseCodeLayout ,courseTeacherLayout ,roomNoLayout;
@@ -70,7 +70,7 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
         myRoutine = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14));
 
         Spinner spin = findViewById(R.id.spinner1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, users);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, days);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
@@ -252,7 +252,7 @@ public class AddRoutine extends AppCompatActivity implements AdapterView.OnItemS
     }
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-        day = users[position] ;
+        day = days[position] ;
     }
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
