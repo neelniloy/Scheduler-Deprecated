@@ -212,12 +212,12 @@ public class AddTaskFragment extends Fragment {
                         titleLayout.setErrorEnabled(false);
                     }
 
-                    if (d.isEmpty()) {
-                        detailsLayout.setError("empty field");
-                        details.requestFocus();
-                    }else {
-                        detailsLayout.setErrorEnabled(false);
-                    }
+//                    if (d.isEmpty()) {
+//                        detailsLayout.setError("empty field");
+//                        details.requestFocus();
+//                    }else {
+//                        detailsLayout.setErrorEnabled(false);
+//                    }
 
                 }
                 else {
@@ -243,6 +243,10 @@ public class AddTaskFragment extends Fragment {
                         status = "Missed";
                     }
 
+
+                    if (d.isEmpty()) {
+                        d = " ";
+                    }
 
 
                     Map add = new HashMap();

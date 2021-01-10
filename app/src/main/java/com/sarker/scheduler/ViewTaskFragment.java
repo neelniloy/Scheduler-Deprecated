@@ -1,64 +1,125 @@
 package com.sarker.scheduler;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ViewTaskFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+
 public class ViewTaskFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public ViewTaskFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ViewTaskFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ViewTaskFragment newInstance(String param1, String param2) {
-        ViewTaskFragment fragment = new ViewTaskFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private RecyclerView mRecyclerView;
+    private TaskAdapter tAdapter;
+    private DatabaseReference mDatabaseRef;
+    private ArrayList<TaskInfo> mList;
+    private ProgressBar mProgressCircle;
+    private TextView emptyRoutine;
+    private FirebaseAuth mAuth;
+    private String current_user_id;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_task, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_task, container, false);
+
+
+        emptyRoutine = view.findViewById(R.id.empty_task);
+        mRecyclerView = view.findViewById(R.id.trecycler_view);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mList = new ArrayList<>();
+        tAdapter = new TaskAdapter(getActivity(),mList);
+        mRecyclerView.setAdapter(tAdapter);
+
+        mProgressCircle = view.findViewById(R.id.tprogress_circle);
+
+
+
+        mAuth = FirebaseAuth.getInstance();
+        current_user_id = mAuth.getCurrentUser().getUid().substring(7,14);
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id).child("Own").child("Task");
+
+
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                    if(dataSnapshot.exists()){
+
+                        mList.clear();
+                        tAdapter.notifyDataSetChanged();
+
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                                TaskInfo info = postSnapshot.getValue(TaskInfo.class);
+
+                                info.setKey(postSnapshot.getKey());
+
+//                                info.setTitle(dataSnapshot.child(key).child("title").getValue().toString());
+//                                info.setDetails(dataSnapshot.child(key).child("details").getValue().toString());
+//                                info.setDate(dataSnapshot.child(key).child("date").getValue().toString());
+//                                info.setStatus(dataSnapshot.child(key).child("status").getValue().toString());
+
+                                mList.add(info);
+
+                            }
+
+
+                        tAdapter.notifyDataSetChanged();
+                        mProgressCircle.setVisibility(View.INVISIBLE);
+
+                }
+                else {
+
+                    emptyRoutine.setVisibility(View.VISIBLE);
+                    mProgressCircle.setVisibility(View.INVISIBLE);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
+
+        });
+
+
+
+
+        return view;
     }
 }
