@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ParseException;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
@@ -31,7 +35,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private  long code;
     private static int DELAY_TIME= 1800;
     private ProgressDialog progressDialog1;
-    private int lastPosition = -1;
+    private int lastPosition = 1000;
     private int expandedPosition = -1;
     private int mExpandedPosition= -1;
 
@@ -52,13 +56,26 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void onBindViewHolder(final TaskAdapter.ViewHolder holder, final int position) {
         final TaskInfo info = rList.get(position);
 
+        String saveCurrentDate, saveCurrentTime,status;
         final String key = info.getKey();
-        String status = info.getStatus();
+        status = info.getStatus();
 
 
         holder.title.setText(info.getTitle());
         holder.details.setText(info.getDetails());
         holder.date.setText(info.getDate());
+
+
+        Calendar calFordDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+        saveCurrentDate = currentDate.format(calFordDate.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        saveCurrentTime = currentTime.format(calFordDate.getTime());
+
+        if (!status.equals("Completed") && getDateInMillis(saveCurrentDate+ " "+saveCurrentTime) > getDateInMillis(info.getDate()+" "+info.getTime())){
+            holder.databaseReference.child(key).child("status").setValue("Missed");
+        }
 
         if (status.equals("Completed")){
             holder.status.setText("● "+status);
@@ -93,6 +110,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 notifyItemChanged(position);
             }
         });
+
 
 
 
@@ -193,7 +211,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             current_user_id = mAuth.getCurrentUser().getUid();
 
 
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14));
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14)).child("Own").child("Task");
 
         }
 
@@ -202,15 +220,29 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private void setAnimation(View viewToAnimate, int position)
     {
 
-        if (position > lastPosition)
+        if (position < lastPosition)
         {
             Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
-        }else if ( position < lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(nContext, R.anim.item_animation_fall_down);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
         }
+
     }
+
+    public static long getDateInMillis(String srcDate) {
+        SimpleDateFormat desiredFormat = new SimpleDateFormat(
+                "dd-MMMM-yyyy hh:mm aa");
+
+        long dateInMillis = 0;
+        try {
+            Date date = desiredFormat.parse(srcDate);
+            dateInMillis = date.getTime();
+            return dateInMillis;
+        } catch (ParseException | java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 }

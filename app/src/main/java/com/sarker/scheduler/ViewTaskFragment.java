@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -55,6 +56,8 @@ public class ViewTaskFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
 
         mList = new ArrayList<>();
         tAdapter = new TaskAdapter(getActivity(),mList);
@@ -69,8 +72,9 @@ public class ViewTaskFragment extends Fragment {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id).child("Own").child("Task");
 
 
+        Query query = mDatabaseRef.orderByChild("status");
 
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

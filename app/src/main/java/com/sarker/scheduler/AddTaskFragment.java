@@ -203,7 +203,7 @@ public class AddTaskFragment extends Fragment {
                 }else if(sDate==null){
                     Toast.makeText(getActivity(), "Select Task Date", Toast.LENGTH_SHORT).show();
                 }
-                else if (t.isEmpty() || d.isEmpty()){
+                else if (t.isEmpty()){
 
                     if (t.isEmpty()) {
                         titleLayout.setError("empty field");
@@ -260,6 +260,7 @@ public class AddTaskFragment extends Fragment {
 
                     myRoutine.child("Own").child("Task").child(""+getDateInMillis(sDate+" "+sTime)).updateChildren(add);
 
+                    Toast.makeText(getActivity(), "Task Added Successfully", Toast.LENGTH_SHORT).show();
                     Intent n = new Intent(getActivity(),Task.class);
                     startActivity(n);
 
@@ -269,7 +270,7 @@ public class AddTaskFragment extends Fragment {
                         public void run() {
 
                             progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Task Added Successfully", Toast.LENGTH_SHORT).show();
+
                             getActivity().finish();
 
                         }
