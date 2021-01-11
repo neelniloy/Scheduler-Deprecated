@@ -44,8 +44,8 @@ public class Task extends AppCompatActivity {
         //End
 
         //set default fragment
-        setFragment(addTaskFragment);
-        textView.setText("Add New Task");
+        setFragment(viewTaskFragment);
+        textView.setText("My Tasks");
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

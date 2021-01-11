@@ -3,13 +3,14 @@
 
 
         <item
-            android:id="@+id/nav_add_task"
-            android:icon="@drawable/ic_add_task"
-            android:title="Add Task" />
-        <item
             android:id="@+id/nav_show_task"
             android:icon="@drawable/ic_view_task"
             android:title="View Task" />
+        <item
+            android:id="@+id/nav_add_task"
+            android:icon="@drawable/ic_add_task"
+            android:title="Add Task" />
+
 
 
 

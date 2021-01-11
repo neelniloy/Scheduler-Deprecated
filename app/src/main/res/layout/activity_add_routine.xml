@@ -128,6 +128,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextCourseName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_course_name"
@@ -137,10 +138,11 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_course_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:endIconMode="none"
                 android:inputType="text"
                 />
 
@@ -148,6 +150,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextCourseCode"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_course_code"
@@ -157,7 +160,7 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_course_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,6 +171,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextCourseTeacherName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_person_blue"
@@ -177,7 +181,7 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_course_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,6 +192,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextCourseRoomNo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_room_no"
@@ -197,7 +202,7 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_room_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private Context nContext;
     private ArrayList<TaskInfo> rList;
     private  long code;
-    private static int DELAY_TIME= 1800;
+    private static int DELAY_TIME= 1500;
     private ProgressDialog progressDialog1;
     private int lastPosition = 1000;
     private int expandedPosition = -1;
@@ -64,6 +65,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.title.setText(info.getTitle());
         holder.details.setText(info.getDetails());
         holder.date.setText(info.getDate());
+        holder.time.setText(info.getTime());
 
 
         Calendar calFordDate = Calendar.getInstance();
@@ -128,38 +130,43 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 //            }
 //        });
 
-//        holder.delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                progressDialog1 = new ProgressDialog(nContext);
-//                progressDialog1.show();
-//                progressDialog1.setMessage("Deleting...");
-//
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        progressDialog1.dismiss();
-//
-//                        holder.databaseReference.child("Own").child("Task").child(key).removeValue();
-//                        rList.remove(holder.getAdapterPosition());
-//                        notifyDataSetChanged();
-//
-//                    }
-//                },DELAY_TIME);
-//
-//            }
-//        });
+        holder.dTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                progressDialog1 = new ProgressDialog(nContext);
+                progressDialog1.show();
+                progressDialog1.setMessage("Deleting...");
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        progressDialog1.dismiss();
+
+                        holder.databaseReference.child(key).removeValue();
+
+                        if (isExpanded){
+                            expandedPosition = position;
+                        }
+                        mExpandedPosition = isExpanded ? -1:position;
+                        notifyItemChanged(expandedPosition);
+                        notifyItemChanged(position);
+
+                        rList.remove(holder.getAdapterPosition());
+                        notifyDataSetChanged();
+
+
+
+                    }
+                },DELAY_TIME);
+
+            }
+        });
 
 
         setAnimation(holder.itemView, position);
 
-//        Animation animation = AnimationUtils.loadAnimation(nContext,
-//                (position > lastPosition) ? R.anim.item_animation_fall_down
-//                        : R.anim.item_animation_fall_down);
-//        holder.itemView.startAnimation(animation);
-//        lastPosition = position;
 
 
     }
@@ -194,17 +201,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public FirebaseAuth mAuth;
         public String current_user_id;
         public ImageView down;
-        public LinearLayout llExpandArea;
+        public CardView llExpandArea;
+        public LinearLayout dTask,rTask,markTask;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.title);
             details = itemView.findViewById(R.id.details);
+            time = itemView.findViewById(R.id.time);
             date = itemView.findViewById(R.id.date);
             status = itemView.findViewById(R.id.status);
             down = itemView.findViewById(R.id.arrow_down);
             llExpandArea = itemView.findViewById(R.id.llExpandArea);
+            dTask = itemView.findViewById(R.id.d_task);
 
 
             mAuth = FirebaseAuth.getInstance();
