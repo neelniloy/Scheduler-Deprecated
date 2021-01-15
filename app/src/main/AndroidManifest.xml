@@ -46,6 +46,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <receiver android:name=".SetAlarm" />
+        <receiver android:name=".SetReminder" />
     </application>
 
 </manifest>

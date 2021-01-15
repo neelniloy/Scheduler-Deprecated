@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -177,38 +178,54 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final EditText input = new EditText(Login.this);
-                AlertDialog dialog = new AlertDialog.Builder(Login.this)
-                        .setTitle("Reset Password")
-                        .setMessage("\nEnter your registered email")
-                        .setView(input)
-                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String resetemail = input.getText().toString();
+                        final EditText input = new EditText(Login.this);
+                        AlertDialog dialog = new AlertDialog.Builder(Login.this)
+                                .setTitle("Reset Password")
+                                .setMessage("\nEnter your registered email")
+                                .setView(input)
+                                .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        final String resetemail = input.getText().toString();
 
-                                if(resetemail.isEmpty()){
-                                    Toast.makeText(Login.this, "Empty Email!", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    mfirebaseAuth.sendPasswordResetEmail(resetemail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                            if (!task.isSuccessful()) {
-                                                Toast.makeText(Login.this, "Password Reset Failed", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(Login.this, "An Email Sent To Your Registered Email", Toast.LENGTH_LONG).show();
-                                            }
-
+                                        if(resetemail.isEmpty()){
+                                            Toast.makeText(Login.this, "Empty Email!", Toast.LENGTH_SHORT).show();
                                         }
-                                    });
-                                }
-                            }
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .create();
-                dialog.show();
+                                        else{
+
+                                            progressDialog = new ProgressDialog(Login.this);
+                                            progressDialog.show();
+                                            progressDialog.setMessage("You will be sent an email...");
+                                            progressDialog.setCanceledOnTouchOutside(false);
+
+
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+
+                                                    progressDialog.dismiss();
+                                                    mfirebaseAuth.sendPasswordResetEmail(resetemail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                    if (!task.isSuccessful()) {
+                                                        Toast.makeText(Login.this, "Password Reset Failed", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(Login.this, "An Email Sent To Your Registered Email", Toast.LENGTH_LONG).show();
+                                                    }
+
+                                                }
+                                            });
+
+
+                                                }
+                                            },1500);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .create();
+                        dialog.show();
 
             }
         });

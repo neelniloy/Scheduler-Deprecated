@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sarker.scheduler.mainview.MainActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,13 +37,17 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditRoutine extends AppCompatActivity {
 
     private ImageView back;
-    private TextInputEditText courseName,courseCode,courseTeacher,roomNo;
+    private MaterialAutoCompleteTextView courseName,courseCode,courseTeacher,roomNo;
     private TextInputLayout courseNameLayout, courseCodeLayout ,courseTeacherLayout ,roomNoLayout;
     private TextView startTime,endTime,dayE;
     private Button start,end,upRoutine;
     private String day,current_user_id,sTime,eTime,format,h1,m1,classTime,cName,cTeacher,cCode,rNo,key;
     private FirebaseAuth mAuth;
-    private DatabaseReference myRoutine,myRoutine2;
+    private DatabaseReference myRoutine,myRoutine2,AutoRef;
+    private ArrayList<String> course = new ArrayList<String>();
+    private ArrayList<String> code = new ArrayList<String>();
+    private ArrayList<String> teacher = new ArrayList<String>();
+    private ArrayList<String> room = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,7 @@ public class EditRoutine extends AppCompatActivity {
         current_user_id = mAuth.getCurrentUser().getUid();
         myRoutine = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14)).child("Own").child(day).child(key);
         myRoutine2 = FirebaseDatabase.getInstance().getReference().child("Routine").child(current_user_id.substring(7,14)).child("Own").child(day);
+        AutoRef = FirebaseDatabase.getInstance().getReference().child("AutoText");
 
         myRoutine.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +100,7 @@ public class EditRoutine extends AppCompatActivity {
 
                     start.setText(classTime.substring(0,8));
                     end.setText(classTime.substring(11,19));
-                    dayE.setText(day);
+                    dayE.setText("Day of Week : "+day);
                     courseName.setText(cName);
                     courseCode.setText(cCode);
                     courseTeacher.setText(cTeacher);
@@ -108,6 +116,100 @@ public class EditRoutine extends AppCompatActivity {
 
             }
         });
+
+        AutoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.child("course").exists()){
+
+
+                    for (DataSnapshot postSnapshot : snapshot.child("course").getChildren()) {
+
+                        String key = postSnapshot.getKey();
+                        String value = snapshot.child("course").child(key).getValue().toString();
+
+                        course.add(value);
+
+                    }
+
+                }
+
+                /////////////////////////
+
+                if (snapshot.child("code").exists()){
+
+                    for (DataSnapshot postSnapshot : snapshot.child("code").getChildren()) {
+
+                        String key = postSnapshot.getKey();
+                        String value = snapshot.child("code").child(key).getValue().toString();
+
+                        code.add(value);
+
+                    }
+
+                }
+
+                //////////////////////////
+
+                if (snapshot.child("teacher").exists()){
+
+                    for (DataSnapshot postSnapshot : snapshot.child("teacher").getChildren()) {
+
+                        String key = postSnapshot.getKey();
+                        String value = snapshot.child("teacher").child(key).getValue().toString();
+
+                        teacher.add(value);
+
+                    }
+
+                }
+
+                //////////////////////
+
+                if (snapshot.child("room").exists()){
+
+                    for (DataSnapshot postSnapshot : snapshot.child("room").getChildren()) {
+
+                        String key = postSnapshot.getKey();
+                        String value = snapshot.child("room").child(key).getValue().toString();
+
+                        room.add(value);
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        //Creating the instance of ArrayAdapter containing list of course name
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, course);
+        //Getting the instance of AutoCompleteTextView
+        courseName.setThreshold(1);//will start working from first character
+        courseName.setAdapter(adapter1);//setting the adapter data into the AutoCompleteTextView
+        /////////////
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, code);
+        courseCode.setThreshold(1);
+        courseCode.setAdapter(adapter2);
+        ///////////
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, teacher);
+        courseTeacher.setThreshold(1);
+        courseTeacher.setAdapter(adapter3);
+        //////////
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, room);
+        roomNo.setThreshold(1);
+        roomNo.setAdapter(adapter4);
 
 
         back.setOnClickListener(new View.OnClickListener() {

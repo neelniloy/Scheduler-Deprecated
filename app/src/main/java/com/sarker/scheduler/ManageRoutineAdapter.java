@@ -44,7 +44,7 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
     }
 
     @Override
-    public void onBindViewHolder(final ManageRoutineAdapter.NewsViewHolder holder, int position) {
+    public void onBindViewHolder(final ManageRoutineAdapter.NewsViewHolder holder, final int position) {
         final RoutineInfo info = rList.get(position);
 
         final String routineKey = info.getRoutineKey().toString();
@@ -87,7 +87,7 @@ public class ManageRoutineAdapter extends RecyclerView.Adapter<ManageRoutineAdap
 
                         holder.databaseReference.child("Own").child(day).child(routineKey).removeValue();
                         rList.remove(holder.getAdapterPosition());
-                        notifyDataSetChanged();
+                        notifyItemChanged(position);
 
                     }
                 },DELAY_TIME);

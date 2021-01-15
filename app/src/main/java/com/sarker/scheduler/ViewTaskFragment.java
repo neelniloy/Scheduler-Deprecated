@@ -1,6 +1,7 @@
 package com.sarker.scheduler;
 
 import android.app.ProgressDialog;
+import android.net.ParseException;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,7 +26,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 
 
 public class ViewTaskFragment extends Fragment {
@@ -36,12 +42,18 @@ public class ViewTaskFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private TaskAdapter tAdapter;
-    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseRef,importRef;
     private ArrayList<TaskInfo> mList;
     private ProgressBar mProgressCircle;
     private TextView emptyRoutine;
     private FirebaseAuth mAuth;
-    private String current_user_id;
+    private String current_user_id,importKey = " ";
+
+    private ArrayList<TaskInfo> first = new ArrayList<TaskInfo>();
+    private ArrayList<TaskInfo> last = new ArrayList<TaskInfo>();
+    //private ArrayList<TaskInfo> impTask = new ArrayList<TaskInfo>();
+
+
 
 
     @Override
@@ -69,14 +81,86 @@ public class ViewTaskFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid().substring(7,14);
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id).child("Own").child("Task");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Routine").child(current_user_id);
+        importRef = FirebaseDatabase.getInstance().getReference("Routine");
 
 
         Query query = mDatabaseRef.orderByChild("status");
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+
+
+                if(dataSnapshot.child("Import").exists()){
+
+                    mList.clear();
+                    importKey = dataSnapshot.child("Import").getValue().toString();
+
+                    importRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot2) {
+
+                            if(dataSnapshot2.child(importKey).child("Own").child("Task").exists()){
+                                tAdapter.notifyDataSetChanged();
+
+                                Calendar calFordDate = Calendar.getInstance();
+                                SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+                                String saveCurrentDate = currentDate.format(calFordDate.getTime());
+
+                                SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+                                String saveCurrentTime = currentTime.format(calFordDate.getTime());
+
+                                for (DataSnapshot postSnapshot : dataSnapshot2.child(importKey).child("Own").child("Task").getChildren()) {
+
+                                    TaskInfo info = postSnapshot.getValue(TaskInfo.class);
+
+                                    info.setKey(postSnapshot.getKey());
+
+                                    if (getDateInMillis(saveCurrentDate+ " "+saveCurrentTime) < getDateInMillis(info.getDate()+" "+info.getTime())){
+
+                                        first.add(info);
+
+                                        saveCurrentDate = info.getDate();
+                                        saveCurrentTime = info.getTime();
+
+
+                                    }else {
+                                        last.add(info);
+                                    }
+
+                                }
+
+                                Collections.reverse(first);
+
+                                mList.addAll(last);
+                                mList.addAll(first);
+
+                                first.clear();
+                                last.clear();
+
+                                tAdapter.notifyDataSetChanged();
+                                mProgressCircle.setVisibility(View.INVISIBLE);
+
+                            }
+                            else {
+
+                                if(!dataSnapshot.child("Own").child("Task").exists()){
+                                    emptyRoutine.setVisibility(View.VISIBLE);
+                                }
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            mProgressCircle.setVisibility(View.INVISIBLE);
+                        }
+
+                    });
+                }
 
 
                     if(dataSnapshot.exists()){
@@ -84,21 +168,42 @@ public class ViewTaskFragment extends Fragment {
                         mList.clear();
                         tAdapter.notifyDataSetChanged();
 
+                        Calendar calFordDate = Calendar.getInstance();
+                        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+                        String saveCurrentDate = currentDate.format(calFordDate.getTime());
 
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+                        String saveCurrentTime = currentTime.format(calFordDate.getTime());
+
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.child("Own").child("Task").getChildren()) {
 
                                 TaskInfo info = postSnapshot.getValue(TaskInfo.class);
 
                                 info.setKey(postSnapshot.getKey());
 
-//                                info.setTitle(dataSnapshot.child(key).child("title").getValue().toString());
-//                                info.setDetails(dataSnapshot.child(key).child("details").getValue().toString());
-//                                info.setDate(dataSnapshot.child(key).child("date").getValue().toString());
-//                                info.setStatus(dataSnapshot.child(key).child("status").getValue().toString());
+                                if (getDateInMillis(saveCurrentDate+ " "+saveCurrentTime) < getDateInMillis(info.getDate()+" "+info.getTime())){
 
-                                mList.add(info);
+                                    first.add(info);
+
+                                    saveCurrentDate = info.getDate();
+                                    saveCurrentTime = info.getTime();
+
+
+                                }else {
+                                    last.add(info);
+                                }
 
                             }
+
+                            Collections.reverse(first);
+
+                            mList.addAll(last);
+                            mList.addAll(first);
+
+
+                            first.clear();
+                            last.clear();
 
 
                         tAdapter.notifyDataSetChanged();
@@ -125,5 +230,21 @@ public class ViewTaskFragment extends Fragment {
 
 
         return view;
+    }
+
+    public static long getDateInMillis(String srcDate) {
+        SimpleDateFormat desiredFormat = new SimpleDateFormat(
+                "dd-MMMM-yyyy hh:mm aa");
+
+        long dateInMillis = 0;
+        try {
+            Date date = desiredFormat.parse(srcDate);
+            dateInMillis = date.getTime();
+            return dateInMillis;
+        } catch (ParseException | java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

@@ -115,6 +115,7 @@
             android:id="@+id/editTextCourseNameE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:startIconDrawable="@drawable/ic_course_name"
             app:startIconTint="#2196F3"
             android:hint="Course Name"
@@ -122,11 +123,12 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_course_nameE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                app:endIconMode="none"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +137,7 @@
             android:id="@+id/editTextCourseCodeE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:startIconDrawable="@drawable/ic_course_code"
             app:startIconTint="#2196F3"
             android:hint="Course Code"
@@ -142,7 +145,7 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_course_codeE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,6 +158,7 @@
             android:id="@+id/editTextCourseTeacherNameE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:startIconDrawable="@drawable/ic_person_blue"
             app:startIconTint="#2196F3"
             android:hint="Course Teacher Name"
@@ -162,7 +166,7 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_course_teacherE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,6 +179,7 @@
             android:id="@+id/editTextCourseRoomNoE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:startIconDrawable="@drawable/ic_room_no"
             app:startIconTint="#2196F3"
             android:hint="Room No"
@@ -182,7 +187,7 @@
             android:layout_marginBottom="10dp"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_room_noE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

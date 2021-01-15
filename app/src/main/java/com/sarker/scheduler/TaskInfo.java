@@ -4,19 +4,20 @@ import java.io.Serializable;
 
 public class TaskInfo implements Serializable {
 
-    public String title,details,time,date,status,key;
+    public String title,details,time,date,status,key,uid;
 
     public TaskInfo(){
 
     }
 
-    public TaskInfo(String title, String details, String time, String date, String status, String key) {
+    public TaskInfo(String title, String details, String time, String date, String status, String key, String uid) {
         this.title = title;
         this.details = details;
         this.time = time;
         this.date = date;
         this.status = status;
         this.key = key;
+        this.uid = uid;
     }
 
     public String getTitle() {
@@ -65,5 +66,13 @@ public class TaskInfo implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

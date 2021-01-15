@@ -31,7 +31,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
 
     private Context nContext;
     private ArrayList<RoutineInfo> rList;
-    private  int code;
+    //private  int code;
     private int lastPosition = -1;
 
 
@@ -48,7 +48,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
     }
 
     @Override
-    public void onBindViewHolder(final NewsViewHolder holder, int position) {
+    public void onBindViewHolder(final NewsViewHolder holder, final int position) {
 
         final RoutineInfo info = rList.get(position);
 
@@ -64,10 +64,10 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
         holder.classTime.setText(info.getClassTime());
 
 
-        SharedPreferences preferences = nContext.getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
+        SharedPreferences preferences = nContext.getSharedPreferences("ROUTINE_FILE_NAME", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = preferences.edit();
 
-        String key = preferences.getString("key", "");
+        String key = preferences.getString(day+""+position, "");
 
         if(key.equals(info.routineKey)){
             holder.clock1.setVisibility(View.VISIBLE);
@@ -83,7 +83,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
             @Override
             public void onClick(View v) {
 
-                code = Integer.parseInt(routineKey)/1000;
+                //code = Integer.parseInt(info.getRoutineKey())/1000;
 
                     int a,b;
                     String time = info.getClassTime().substring(0,2);
@@ -114,12 +114,12 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
                     c.set(Calendar.MINUTE, b);
                     c.set(Calendar.SECOND, 0);
 
-                    editor.putString("key", info.routineKey);
+                    editor.putString(day+""+position, info.routineKey);
                     editor.apply();
 
                 holder.clock0.setVisibility(View.GONE);
                 holder.clock1.setVisibility(View.VISIBLE);
-                    startAlarm(c,code);
+                    startAlarm(c,Integer.parseInt(info.getRoutineKey())/1000);
                     Toast.makeText(nContext, "Alarm Activated", Toast.LENGTH_SHORT).show();
 
 
@@ -134,17 +134,17 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
             @Override
             public void onClick(View v) {
 
-                code = Integer.parseInt(routineKey)/1000;
+                //code = Integer.parseInt(routineKey)/1000;
 
 
-                    cancelAlarm(code);
+                    cancelAlarm(Integer.parseInt(info.getRoutineKey())/1000);
                     holder.clock1.setVisibility(View.GONE);
                     holder.clock0.setVisibility(View.VISIBLE);
 
 
                     //editor.putString("key", info.routineKey);
-                    editor.clear();
-                    editor.apply();
+                editor.putString(day+""+position, "");
+                editor.apply();
 
                     Toast.makeText(nContext, "Alarm Canceled", Toast.LENGTH_SHORT).show();
 
@@ -214,16 +214,19 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
     private void startAlarm(Calendar c,int key) {
         AlarmManager alarmManager = (AlarmManager) nContext.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(nContext, SetAlarm.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(nContext, key, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(nContext, key, intent,PendingIntent.FLAG_UPDATE_CURRENT);
         if (c.before(Calendar.getInstance())) {
-            c.add(Calendar.DATE, 1);
+            c.add(Calendar.DATE, 7);
         }
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),7 * 24 * 60 * 60 * 1000, pendingIntent);
     }
+
+
+
     private void cancelAlarm(int key) {
         AlarmManager alarmManager = (AlarmManager) nContext.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(nContext, SetAlarm.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(nContext, key, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(nContext, key, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
         Toast.makeText(nContext, "Alarm Canceled", Toast.LENGTH_SHORT).show();
     }
