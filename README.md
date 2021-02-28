@@ -1,4 +1,4 @@
-# Scheduler ![PreBeta](https://img.shields.io/badge/v1.0-Alpha-blue?style=for-the-badge&logo=github)
+# Scheduler ![PreBeta](https://img.shields.io/badge/v2.0-Alpha-blue?style=for-the-badge&logo=github)
 Manage Routine Like Never Before
 
 ## About 
