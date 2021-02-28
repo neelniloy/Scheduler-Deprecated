@@ -12,15 +12,15 @@ Basically this app made to manage our class routine easily. This is mainly a clo
 - [x] Class Reminder
 - [x] Cloud Syncronization
 - [x] Always up-to date
-- [ ] Added Task
-- [ ] Task Reminder
+- [x] Added Task
+- [x] Task Reminder
 
 ## Screenshot
 Added Soon
 
 ## Download
 
-[Click here to download](https://drive.google.com/file/d/1asct6RMcyDAblaDcNGCLhecUTG9rnL1g/view?usp=sharing) ![Download](https://img.shields.io/badge/Google%20Drive-blue)
+[Click here to download](https://drive.google.com/file/d/1sEyAeLWbaq-CyFBuwft3OqzimXDZuT1w/view?usp=sharing) ![Download](https://img.shields.io/badge/Google%20Drive-blue)
 
 
 ## Contributors
