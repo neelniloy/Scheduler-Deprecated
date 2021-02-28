@@ -20,7 +20,7 @@ Added Soon
 
 ## Download
 
-[Click here to download](https://drive.google.com/file/d/1sEyAeLWbaq-CyFBuwft3OqzimXDZuT1w/view?usp=sharing) ![Download](https://img.shields.io/badge/Google%20Drive-blue)
+[Click here to download](https://drive.google.com/file/d/1sEyAeLWbaq-CyFBuwft3OqzimXDZuT1w/view?usp=sharing) [![Download](https://img.shields.io/badge/Google%20Drive-blue)](https://drive.google.com/file/d/1sEyAeLWbaq-CyFBuwft3OqzimXDZuT1w/view?usp=sharing)
 
 
 ## Contributors
