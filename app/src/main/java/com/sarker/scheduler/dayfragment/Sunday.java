@@ -75,14 +75,14 @@ public class Sunday extends Fragment {
         importRef.keepSynced(true);
 
 
-        rDatabaseRef.addValueEventListener(new ValueEventListener() {
+        rDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.child("Import").exists()){
                     importKey = dataSnapshot.child("Import").getValue().toString();
 
-                    importRef.addValueEventListener(new ValueEventListener() {
+                    importRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot2) {
 

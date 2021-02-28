@@ -87,7 +87,7 @@ public class ViewTaskFragment extends Fragment {
 
         Query query = mDatabaseRef.orderByChild("status");
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
@@ -97,7 +97,7 @@ public class ViewTaskFragment extends Fragment {
                     mList.clear();
                     importKey = dataSnapshot.child("Import").getValue().toString();
 
-                    importRef.addValueEventListener(new ValueEventListener() {
+                    importRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot2) {
 

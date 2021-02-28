@@ -111,7 +111,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.NewsView
 
                     Calendar c = Calendar.getInstance();
                     c.set(Calendar.HOUR_OF_DAY, a);
-                    c.set(Calendar.MINUTE, b);
+                    c.set(Calendar.MINUTE, b-1);
                     c.set(Calendar.SECOND, 0);
 
                     editor.putString(day+""+position, info.routineKey);
