@@ -365,31 +365,30 @@ public class EditRoutine extends AppCompatActivity {
 
                     if (key.equals(""+getDateInMillis(sTime))){
                         myRoutine2.child(key).updateChildren(add);
+
+                        Toast.makeText(EditRoutine.this, "Routine Updated Successfully", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(EditRoutine.this, MainActivity.class);
+                        intent.putExtra("day", day);
+                        startActivity(intent);
+                        finish();
                     }
                     else {
 
                         myRoutine2.child(""+getDateInMillis(sTime)).updateChildren(add);
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+                        myRoutine2.child(key).removeValue();
+                        key = ""+getDateInMillis(sTime);
 
-                                myRoutine2.child(key).removeValue();
-                                key = ""+getDateInMillis(sTime);
+                        Toast.makeText(EditRoutine.this, "Routine Updated Successfully", Toast.LENGTH_SHORT).show();
 
-                            }
-                        },1500);
+                        Intent intent = new Intent(EditRoutine.this, MainActivity.class);
+                        intent.putExtra("day", day);
+                        startActivity(intent);
+                        finish();
 
                     }
 
-
-
-                    Toast.makeText(EditRoutine.this, "Routine Update Successfully", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(EditRoutine.this, MainActivity.class);
-                    intent.putExtra("day", day);
-                    EditRoutine.this.startActivity(intent);
-                    finish();
                 }
 
             }
